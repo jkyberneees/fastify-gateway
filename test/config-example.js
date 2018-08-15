@@ -8,10 +8,10 @@ module.exports = async (proxy) => {
       target: 'http://localhost:3000',
       middlewares: [],
       hooks: {
-        // onRequest: async (req, reply) => {},
+        onRequest: async (req, reply) => {},
 
         // https://github.com/fastify/fastify-reply-from#replyfromsource-opts
-        // onResponse: (res, reply) => reply.send(res) // NOTE: reply function is available here
+        onResponse: (res, reply) => reply.send(res) // NOTE: reply function is available here
       }
     }]
   }

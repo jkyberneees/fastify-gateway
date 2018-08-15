@@ -8,29 +8,38 @@ const fastify = Fastify({
 })
 fastify.register(require('fastify-reply-from'))
 
-let server
+let gateway, remote
 
 describe('API Gateway', () => {
   it('initialize', async () => {
-    const gateway = require('./../index')(
+    // init gateway
+    require('./../index')(
       fastify,
       await require('./config-example')(fastify)
-    )
-    gateway.register()
+    ).register()
+    gateway = await fastify.listen(8080)
 
-    server = await fastify.listen(8080)
+    // init remote
+    remote = require('restana')({})
+    remote.get('/info', (req, res) => {
+      res.send({
+        name: 'fastify-gateway'
+      })
+    })
+    await remote.start()
   })
 
   it('GET /users', async () => {
-    await request(server)
-      .get('/users/v1/welcome')
+    await request(gateway)
+      .get('/users/info')
       .expect(200)
       .then((response) => {
-        expect(response.text).to.equal('Hello World!')
+        expect(response.body.name).to.equal('fastify-gateway')
       })
   })
 
-  it('close', (done) => {
-    fastify.close(done)
+  it('close', async () => {
+    await remote.close()
+    await fastify.close()
   })
 })
