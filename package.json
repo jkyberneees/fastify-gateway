@@ -1,0 +1,36 @@
+{
+  "name": "fastify-gateway",
+  "version": "1.0.0",
+  "description": "A Node.js API Gateway that just works!",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/feature.test",
+    "format": "npx standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkyberneees/fastify-gateway.git"
+  },
+  "keywords": [
+    "API",
+    "gateway",
+    "fastify",
+    "http",
+    "proxy"
+  ],
+  "author": "Rolando Santamaria Maso <kyberneees@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jkyberneees/fastify-gateway/issues"
+  },
+  "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "fastify": "^1.9.0",
+    "fastify-reply-from": "^0.5.1",
+    "mocha": "^5.2.0",
+    "standard": "^11.0.1",
+    "supertest": "^3.1.0"
+  }
+}

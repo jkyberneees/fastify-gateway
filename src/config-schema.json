@@ -1,0 +1,64 @@
+{
+    "$id": "https://github.com/jkyberneees/fastify-gateway/src/config-schema.json",
+    "type": "object",
+    "properties": {
+      "middlewares": {
+        "$id": "/properties/middlewares",
+        "type": "array"
+      },
+      "routes": {
+        "$id": "/properties/routes",
+        "type": "array",
+        "items": {
+          "$id": "/properties/routes/items",
+          "type": "object",
+          "properties": {
+            "prefix": {
+              "$id": "/properties/routes/items/properties/prefix",
+              "type": "string",
+              "title": "The Prefix Schema ",
+              "default": "",
+              "minLength": 2,
+              "examples": [
+                "/v1/users"
+              ]
+            },
+            "prefixRewrite": {
+              "$id": "/properties/routes/items/properties/prefixRewrite",
+              "type": "string",
+              "title": "The PrefixRewrite Schema ",
+              "default": "",
+              "examples": [
+                "/v1"
+              ]
+            },
+            "target": {
+              "$id": "/properties/routes/items/properties/target",
+              "type": "string",
+              "title": "The Target Schema ",
+              "default": "",
+              "examples": [
+                "http://users.api:3000"
+              ]
+            },
+            "middlewares": {
+              "$id": "/properties/routes/items/properties/middlewares",
+              "type": "array"
+            },
+            "hooks": {
+              "$id": "/properties/routes/items/properties/hooks",
+              "type": "object"
+            }
+          },
+          "required": [
+            "target",
+            "middlewares",
+            "hooks"
+          ]
+        }
+      }
+    },
+    "required": [
+      "middlewares"
+    ]
+  }
