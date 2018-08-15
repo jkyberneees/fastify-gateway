@@ -30,6 +30,7 @@
     "fastify": "^1.9.0",
     "fastify-reply-from": "^0.5.1",
     "mocha": "^5.2.0",
+    "restana": "^2.2.0",
     "standard": "^11.0.1",
     "supertest": "^3.1.0"
   }
