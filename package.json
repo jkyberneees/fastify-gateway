@@ -4,7 +4,7 @@
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/feature.test",
+    "test": "nyc mocha test/feature.test",
     "format": "npx standard --fix"
   },
   "repository": {
@@ -31,6 +31,8 @@
     "fastify": "^1.9.0",
     "fastify-reply-from": "^0.5.1",
     "mocha": "^5.2.0",
+    "nyc": "^12.0.2",
+    "response-time": "^2.3.2",
     "restana": "^2.2.0",
     "standard": "^11.0.1",
     "supertest": "^3.1.0"
