@@ -59,6 +59,7 @@
       }
     },
     "required": [
-      "middlewares"
+      "middlewares",
+      "routes" 
     ]
   }
