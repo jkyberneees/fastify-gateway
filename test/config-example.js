@@ -1,6 +1,6 @@
-module.exports = async (proxy) => {
+module.exports = async () => {
   return {
-    middlewares: [],
+    middlewares: [require('cors')()],
 
     routes: [{
       prefix: '/users',
