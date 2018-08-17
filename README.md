@@ -62,7 +62,7 @@ Yeap, this is a super fast gateway implementation!
 
 Creating fine grained REST microservices in Node.js is the [easy part](https://thenewstack.io/introducing-fastify-speedy-node-js-web-framework/), difficult is to correctly integrate them as one single solution afterwards!  
 
-This gateway implementation is not only a classic HTTP proxy router, it is also a Node.js frienly `cross-cutting concerns` management solution. You don't have to: 
+This gateway implementation is not only a classic HTTP proxy router, it is also a Node.js friendly `cross-cutting concerns` management solution. You don't have to: 
  - repeat in/out middleware logic anymore (cors, authentication, authorization, caching, ...)
  - blame Node.js because the asynchronous post processing of proxied requests was hard to implement...
  - ...
