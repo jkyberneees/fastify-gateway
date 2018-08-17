@@ -54,7 +54,7 @@ fastify.listen(8080).then((address) => {
 
 ## Introduction
 
-Node.js API Gateway plugin implementation for the [fastify](https://fastify.io) [ecosystem](https://www.fastify.io/ecosystem/), a low footprint plugin implementation that uses the [fastify-reply-from](https://github.com/fastify/fastify-reply-from) HTTP proxy library.  
+Node.js API Gateway plugin for the [fastify](https://fastify.io) [ecosystem](https://www.fastify.io/ecosystem/), a low footprint implementation that uses the [fastify-reply-from](https://github.com/fastify/fastify-reply-from) HTTP proxy library.  
 
 Yeap, this is a super fast gateway implementation!
 
