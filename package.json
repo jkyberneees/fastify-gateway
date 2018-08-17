@@ -1,11 +1,12 @@
 {
-  "name": "fastify-gateway",
+  "name": "k-fastify-gateway",
   "version": "1.0.0",
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha test/feature.test",
-    "format": "npx standard --fix"
+    "test": "nyc mocha test/*.test.js",
+    "format": "npx standard --fix",
+    "lint": "npx standard"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
   "dependencies": {},
   "devDependencies": {
+    "basic-auth-connect": "^1.0.0",
     "chai": "^4.1.2",
     "cors": "^2.8.4",
     "fastify": "^1.9.0",
