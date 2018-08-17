@@ -1,9 +1,17 @@
 # k-fastify-gateway
-An API gateway that just works!
+A Node.js API gateway that just works!
 
 [![Build Status](https://travis-ci.org/jkyberneees/fastify-gateway.svg?branch=master)](https://travis-ci.org/jkyberneees/fastify-gateway)
 [![NPM version](https://img.shields.io/npm/v/k-fastify-gateway.svg?style=flat)](https://www.npmjs.com/package/k-fastify-gateway)
 
+## Get started in two steps
+
+1. Install required dependencies:
+```bash
+npm i fastify fastify-reply-from k-fastify-gateway
+```
+
+2. Launch your gateway 🔥:
 ```js
 const fastify = require('fastify')({})
 fastify.register(require('fastify-reply-from'))
@@ -38,3 +46,5 @@ fastify.listen(8080).then((address) => {
   console.log(`API Gateway listening on ${address}`)
 })
 ```
+
+## WIP
