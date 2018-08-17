@@ -26,6 +26,9 @@
   },
   "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
   "dependencies": {},
+  "files": [
+    "src"
+  ],
   "devDependencies": {
     "basic-auth-connect": "^1.0.0",
     "chai": "^4.1.2",
