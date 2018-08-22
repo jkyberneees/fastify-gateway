@@ -3,7 +3,8 @@ fastify.register(require('fastify-reply-from'))
 fastify.register(require('..'), {
 
   middlewares: [
-    require('cors')()
+    require('cors')(),
+    require('helmet')()
   ],
 
   routes: [{
@@ -20,7 +21,7 @@ fastify.register(require('..'), {
     prefixRewrite: '',
     target: 'http://localhost:3001',
     middlewares: [
-      require('basic-auth-connect')('admin', 's3cr3t-pass')
+      require('express-jwt')({secret: 'shhhhhhared-secret'})
     ],
     hooks: {
     }
