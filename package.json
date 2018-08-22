@@ -30,7 +30,6 @@
     "src"
   ],
   "devDependencies": {
-    "basic-auth-connect": "^1.0.0",
     "chai": "^4.1.2",
     "cors": "^2.8.4",
     "express-jwt": "^5.3.1",
