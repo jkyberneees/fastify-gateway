@@ -77,6 +77,8 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
 
   // HTTP proxy
   routes: [{
+    // Optional path matching regex. Default value: '/*'
+    pathRegex: '/*'
     // route prefix
     prefix: '/public',
     // prefix rewrite before request is forwarded
