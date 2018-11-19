@@ -41,6 +41,16 @@
                 "http://users.api:3000"
               ]
             },
+            "pathRegex": {
+              "$id": "/properties/routes/items/properties/pathRegex",
+              "type": "string",
+              "title": "The PathRegex Schema ",
+              "default": "/*",
+              "examples": [
+                "/*",
+                "*"
+              ]
+            },
             "middlewares": {
               "$id": "/properties/routes/items/properties/middlewares",
               "type": "array"

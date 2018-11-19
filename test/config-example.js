@@ -3,6 +3,14 @@ module.exports = async () => {
     middlewares: [require('cors')()],
 
     routes: [{
+      pathRegex: '*',
+      prefix: '/endpoint-proxy',
+      prefixRewrite: '/endpoint-proxy',
+      target: 'http://localhost:3000',
+      middlewares: [],
+      hooks: {
+      }
+    }, {
       prefix: '/users',
       prefixRewrite: '',
       target: 'http://localhost:3000',

@@ -35,6 +35,9 @@ describe('API Gateway', () => {
 
     // init remote service
     remote = require('restana')({})
+    remote.get('/endpoint-proxy', (req, res) => res.send({
+      name: 'endpoint-proxy'
+    }))
     remote.get('/info', (req, res) => res.send({
       name: 'fastify-gateway'
     }))
@@ -83,6 +86,15 @@ describe('API Gateway', () => {
       .expect(200)
       .then((response) => {
         expect(response.body.name).to.equal('fastify-gateway')
+      })
+  })
+
+  it('GET /endpoint-proxy - 404', async () => {
+    await request(gateway)
+      .get('/endpoint-proxy')
+      .expect(200)
+      .then((response) => {
+        expect(response.body.name).to.equal('endpoint-proxy')
       })
   })
 
