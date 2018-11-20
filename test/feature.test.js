@@ -89,13 +89,19 @@ describe('API Gateway', () => {
       })
   })
 
-  it('GET /endpoint-proxy - 404', async () => {
+  it('GET /endpoint-proxy - 200', async () => {
     await request(gateway)
       .get('/endpoint-proxy')
       .expect(200)
       .then((response) => {
         expect(response.body.name).to.equal('endpoint-proxy')
       })
+  })
+
+  it('GET /endpoint-proxy-sdfsfsfsf - should fail with 404 because pathRegex=""', async () => {
+    await request(gateway)
+      .get('/endpoint-proxy-sdfsfsfsf')
+      .expect(404)
   })
 
   it('GET /users/proxy-aborted/info - 200', async () => {
