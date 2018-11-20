@@ -78,6 +78,7 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
   // HTTP proxy
   routes: [{
     // Optional path matching regex. Default value: '/*'
+    // In order to disable the 'pathRegex' at all, you can use an empty string: ''
     pathRegex: '/*'
     // route prefix
     prefix: '/public',
