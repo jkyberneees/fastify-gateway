@@ -19,8 +19,11 @@ function gateway (fastify, opts, next) {
     route.hooks.onRequest = route.hooks.onRequest || (async (req, reply) => { })
     route.hooks.onResponse = route.hooks.onResponse || ((res, reply) => reply.send(res))
 
+    // populating pathRegex if missing
+    route.pathRegex = undefined === route.pathRegex ? '/*' : String(route.pathRegex)
+
     // registering route handler
-    fastify.all(route.prefix + (route.pathRegex || '/*'), (request, reply) => {
+    fastify.all(route.prefix + route.pathRegex, (request, reply) => {
       request.req.url = request.req.url.replace(route.prefix, route.prefixRewrite)
       route.hooks.onRequest(request, reply).then(shouldAbortProxy => {
         // check if request proxy to remote should be aborted
