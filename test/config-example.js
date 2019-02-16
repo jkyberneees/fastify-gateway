@@ -19,7 +19,7 @@ module.exports = async () => {
         async onRequest (req, reply) {},
 
         // https://github.com/fastify/fastify-reply-from#replyfromsource-opts
-        onResponse (res, reply) { reply.send(res) } // NOTE: reply function is available here
+        onResponse (req, reply, res) { reply.send(res) }
       }
     }, {
       prefix: '/users/proxy-aborted',
