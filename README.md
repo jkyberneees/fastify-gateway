@@ -96,7 +96,7 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
       //
       //   return true // truthy value returned will abort the request forwarding
       },
-      onResponse (res, reply) {
+      onResponse (req, reply, res) {  
         // do some post-processing here
         // ...
         // forward response to origin client once finished
@@ -108,6 +108,16 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
   }]
 }
 ```
+### Breaking changes
+In `v2.x` the `hooks.onResponse` signature has changed from:
+```js
+onResponse (res, reply)
+```
+to:
+```js
+onResponse (req, reply, res)
+```
+> More details: https://github.com/fastify/fastify-reply-from/pull/43
 
 ## Want to contribute?
 This is your repo ;)  
