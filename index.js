@@ -17,7 +17,7 @@ function gateway (fastify, opts, next) {
 
     // populating required NOOPS
     route.hooks.onRequest = route.hooks.onRequest || (async (req, reply) => { })
-    route.hooks.onResponse = route.hooks.onResponse || ((res, reply) => reply.send(res))
+    route.hooks.onResponse = route.hooks.onResponse || ((req, reply, res) => reply.send(res))
 
     // populating pathRegex if missing
     route.pathRegex = undefined === route.pathRegex ? '/*' : String(route.pathRegex)
@@ -28,10 +28,7 @@ function gateway (fastify, opts, next) {
       route.hooks.onRequest(request, reply).then(shouldAbortProxy => {
         // check if request proxy to remote should be aborted
         if (!shouldAbortProxy) {
-          reply.from(route.target + url, Object.assign({}, route.hooks, {
-            // override onResponse hook to pass the "reply" object
-            onResponse: (res) => route.hooks.onResponse(res, reply)
-          }))
+          reply.from(route.target + url, Object.assign({}, route.hooks))
         }
       }).catch(err => {
         reply.send(err)

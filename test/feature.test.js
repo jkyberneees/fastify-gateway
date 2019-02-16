@@ -41,7 +41,14 @@ describe('API Gateway', () => {
     remote.get('/info', (req, res) => res.send({
       name: 'fastify-gateway'
     }))
+    remote.post('/204', (req, res) => res.send(204)) // https://github.com/jkyberneees/fastify-gateway/issues/11
     await remote.start(3000)
+  })
+
+  it('remote is proxied /users/response-time/204 - 204', async () => {
+    await request(gateway)
+      .post('/users/response-time/204')
+      .expect(204)
   })
 
   it('(cors present) OPTIONS /users/response-time/info - 204', async () => {
