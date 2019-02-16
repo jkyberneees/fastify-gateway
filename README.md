@@ -8,8 +8,9 @@ A Node.js API gateway that just works!
 
 Install required dependencies:
 ```bash
-npm i fastify fastify-reply-from k-fastify-gateway
+npm i fastify k-fastify-gateway
 ```
+> NOTE: From v2.x, `fastify-reply-from` is a direct dependency.
 
 Launch your gateway 🔥:
 ```js
