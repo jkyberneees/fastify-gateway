@@ -37,7 +37,7 @@
     "express-jwt": "^5.3.1",
     "fastify": "^1.14.1",
     "helmet": "^3.15.1",
-    "mocha": "^5.2.0",
+    "mocha": "^6.0.0",
     "nyc": "^13.3.0",
     "response-time": "^2.3.2",
     "restana": "^2.8.1",
