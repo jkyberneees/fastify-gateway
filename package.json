@@ -1,12 +1,13 @@
 {
   "name": "k-fastify-gateway",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha test/*.test.js",
     "format": "npx standard --fix",
-    "lint": "npx standard"
+    "lint": "npx standard",
+    "bench": "( pm2 start benchmark/service.js -i 4 && pm2 start benchmark/gateway.js -i 4 & (sleep 5 && wrk -t8 -c8 -d30s http://127.0.0.1:8080/service/hi && pm2 delete all) )"
   },
   "repository": {
     "type": "git",
@@ -39,8 +40,9 @@
     "helmet": "^3.15.1",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0",
+    "pm2": "^3.4.0",
     "response-time": "^2.3.2",
-    "restana": "^2.9.0",
+    "restana": "^2.10.0",
     "standard": "^12.0.0",
     "stream-to-array": "^2.3.0",
     "supertest": "^3.4.2"
