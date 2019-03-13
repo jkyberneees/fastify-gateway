@@ -7,7 +7,8 @@
     "test": "nyc mocha test/*.test.js",
     "format": "npx standard --fix",
     "lint": "npx standard",
-    "bench": "( pm2 start benchmark/service.js -i 4 && pm2 start benchmark/gateway.js -i 4 & (sleep 5 && wrk -t8 -c8 -d30s http://127.0.0.1:8080/service/hi && pm2 delete all) )"
+    "bench-pm2": "( pm2 start benchmark/service.js -i 4 && pm2 start benchmark/gateway.js -i 4 & (sleep 5 && wrk -t8 -c8 -d30s http://127.0.0.1:8080/service/hi && pm2 delete all) )",
+    "bench": "( node benchmark/service.js & node benchmark/gateway.js & (sleep 5 && wrk -t8 -c8 -d30s http://127.0.0.1:8080/service/hi) )"
   },
   "repository": {
     "type": "git",
