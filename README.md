@@ -33,7 +33,7 @@ fastify.register(require('k-fastify-gateway'), {
     middlewares: [],
     hooks: {
       // async onRequest (req, reply) {},
-      // onResponse (res, reply) { reply.send(res) }
+      // onResponse (req, reply, res) { reply.send(res) }
     }
   }, {
     prefix: '/admin',
