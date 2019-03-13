@@ -33,7 +33,7 @@ fastify.register(require('k-fastify-gateway'), {
     middlewares: [],
     hooks: {
       // async onRequest (req, reply) {},
-      // onResponse (res, reply) { reply.send(res) }
+      // onResponse (req, reply, res) { reply.send(res) }
     }
   }, {
     prefix: '/admin',
@@ -119,6 +119,24 @@ to:
 onResponse (req, reply, res)
 ```
 > More details: https://github.com/fastify/fastify-reply-from/pull/43
+
+## Benchmarks
+`Version`: 2.0.1  
+`Node`: 10.15.3  
+`Machine`: MacBook Pro 2016, 2,7 GHz Intel Core i7, 16 GB 2133 MHz LPDDR3  
+`Gateway processes`: 1  
+`Service processes`: 1
+
+```bash
+Running 30s test @ http://127.0.0.1:8080/service/hi
+  8 threads and 8 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   841.58us  662.17us  35.22ms   98.66%
+    Req/Sec     1.23k   130.62     1.29k    95.02%
+  293897 requests in 30.10s, 42.60MB read
+Requests/sec:   9763.61
+Transfer/sec:      1.42MB
+```
 
 ## Want to contribute?
 This is your repo ;)  
