@@ -36,7 +36,7 @@ const gateway = (fastify, opts, next) => {
 
     // registering route handler
     route.methods
-      ? route.methods.forEach(method => fastify[method.toLowerCase()](route.prefix + route.pathRegex, proxy(route)))
+      ? fastify.route({ method: route.methods, url: route.prefix + route.pathRegex, handler: proxy(route) })
       : fastify.all(route.prefix + route.pathRegex, proxy(route))
   })
 
