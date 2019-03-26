@@ -51,6 +51,17 @@
                 "*"
               ]
             },
+            "methods": {
+              "$id": "/properties/routes/items/properties/methods",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["DELETE", "GET", "HEAD", "PATCH", "POST", "PUT", "OPTIONS"]
+              },
+              "examples": [
+                ["GET"]
+              ]
+            },
             "middlewares": {
               "$id": "/properties/routes/items/properties/middlewares",
               "type": "array"

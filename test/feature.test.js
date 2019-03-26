@@ -42,6 +42,16 @@ describe('API Gateway', () => {
       name: 'fastify-gateway'
     }))
     remote.post('/204', (req, res) => res.send(204)) // https://github.com/jkyberneees/fastify-gateway/issues/11
+    remote.get('/endpoint-proxy-methods', (req, res) => res.send({
+      name: 'endpoint-proxy-methods'
+    }))
+    remote.post('/endpoint-proxy-methods', (req, res) => res.send({
+      name: 'endpoint-proxy-methods'
+    }))
+    remote.put('/endpoint-proxy-methods-put', (req, res) => res.send({
+      name: 'endpoint-proxy-methods-put'
+    }))
+
     await remote.start(3000)
   })
 
@@ -102,6 +112,33 @@ describe('API Gateway', () => {
       .expect(200)
       .then((response) => {
         expect(response.body.name).to.equal('endpoint-proxy')
+      })
+  })
+
+  it('GET /endpoint-proxy-methods - 200', async () => {
+    await request(gateway)
+      .get('/endpoint-proxy-methods')
+      .expect(200)
+      .then((response) => {
+        expect(response.body.name).to.equal('endpoint-proxy-methods')
+      })
+  })
+
+  it('POST /endpoint-proxy-methods - 200', async () => {
+    await request(gateway)
+      .post('/endpoint-proxy-methods')
+      .expect(200)
+      .then((response) => {
+        expect(response.body.name).to.equal('endpoint-proxy-methods')
+      })
+  })
+
+  it('PUT /endpoint-proxy-methods - 200', async () => {
+    await request(gateway)
+      .put('/endpoint-proxy-methods')
+      .expect(200)
+      .then((response) => {
+        expect(response.body.name).to.equal('endpoint-proxy-methods-put')
       })
   })
 

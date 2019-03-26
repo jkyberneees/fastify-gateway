@@ -1,7 +1,19 @@
 const configValidate = require('./src/config-validate')
 const fp = require('fastify-plugin')
 
-function gateway (fastify, opts, next) {
+const proxy = route => (request, reply) => {
+  const url = request.req.url.replace(route.prefix, route.prefixRewrite)
+  route.hooks.onRequest(request, reply).then(shouldAbortProxy => {
+    // check if request proxy to remote should be aborted
+    if (!shouldAbortProxy) {
+      reply.from(route.target + url, Object.assign({}, route.hooks))
+    }
+  }).catch(err => {
+    reply.send(err)
+  })
+}
+
+const gateway = (fastify, opts, next) => {
   configValidate(opts)
 
   // registering global middlewares
@@ -23,17 +35,9 @@ function gateway (fastify, opts, next) {
     route.pathRegex = undefined === route.pathRegex ? '/*' : String(route.pathRegex)
 
     // registering route handler
-    fastify.all(route.prefix + route.pathRegex, (request, reply) => {
-      const url = request.req.url.replace(route.prefix, route.prefixRewrite)
-      route.hooks.onRequest(request, reply).then(shouldAbortProxy => {
-        // check if request proxy to remote should be aborted
-        if (!shouldAbortProxy) {
-          reply.from(route.target + url, Object.assign({}, route.hooks))
-        }
-      }).catch(err => {
-        reply.send(err)
-      })
-    })
+    route.methods
+      ? route.methods.forEach(method => fastify[method.toLowerCase()](route.prefix + route.pathRegex, proxy(route)))
+      : fastify.all(route.prefix + route.pathRegex, proxy(route))
   })
 
   next()
