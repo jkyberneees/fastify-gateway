@@ -1,6 +1,6 @@
 {
   "name": "k-fastify-gateway",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
@@ -37,8 +37,8 @@
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express-jwt": "^5.3.1",
-    "fastify": "^2.0.1",
-    "helmet": "^3.15.1",
+    "fastify": "^2.1.0",
+    "helmet": "^3.16.0",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0",
     "pm2": "^3.4.0",
