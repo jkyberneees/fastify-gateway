@@ -47,7 +47,6 @@ fastify.register(require('k-fastify-gateway'), {
   }, {
     prefix: '/user',
     prefixRewrite: '',
-    methods: ['GET', 'PUT']
     target: 'http://localhost:3001',
     middlewares: [],
     hooks: {
@@ -95,6 +94,8 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
     prefixRewrite: '',
     // remote HTTP server URL to forward the request
     target: 'http://localhost:3000',
+    // optional HTTP methods to limit the requests proxy to certain verbs only
+    methods: ['GET', 'POST', ...], // any of supported HTTP methods: https://github.com/fastify/fastify/blob/master/docs/Routes.md#full-declaration
     // route level middlewares
     middlewares: [],
     // proxy lifecycle hooks
