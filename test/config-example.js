@@ -54,6 +54,26 @@ module.exports = async () => {
           throw new Error('ups, pre-processing error...')
         }
       }
+    },
+    {
+      pathRegex: '',
+      prefix: '/endpoint-proxy-methods',
+      prefixRewrite: '/endpoint-proxy-methods',
+      target: 'http://localhost:3000',
+      methods: ['GET', 'POST'],
+      middlewares: [],
+      hooks: {
+      }
+    },
+    {
+      pathRegex: '',
+      prefix: '/endpoint-proxy-methods',
+      prefixRewrite: '/endpoint-proxy-methods-put',
+      target: 'http://localhost:3000',
+      methods: ['PUT'],
+      middlewares: [],
+      hooks: {
+      }
     }]
   }
 }

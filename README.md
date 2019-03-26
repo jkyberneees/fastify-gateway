@@ -44,6 +44,14 @@ fastify.register(require('k-fastify-gateway'), {
     ],
     hooks: {
     }
+  }, {
+    prefix: '/user',
+    prefixRewrite: '',
+    methods: ['GET', 'PUT']
+    target: 'http://localhost:3001',
+    middlewares: [],
+    hooks: {
+    }
   }]
 })
 
