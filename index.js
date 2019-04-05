@@ -32,7 +32,8 @@ const gateway = (fastify, opts, next) => {
     route.hooks.onResponse = route.hooks.onResponse || ((req, reply, res) => reply.send(res))
 
     // populating pathRegex if missing
-    route.pathRegex = undefined === route.pathRegex && opts.globalPathRegex !== undefined ? opts.globalPathRegex : String(route.pathRegex)
+    opts.globalPathRegex = opts.globalPathRegex === undefined ? '/*' : String(opts.globalPathRegex)
+    route.pathRegex = undefined === route.pathRegex && opts.globalPathRegex !== undefined ? String(opts.globalPathRegex) : String(route.pathRegex)
 
     // registering route handler
     route.methods
