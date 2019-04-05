@@ -1,7 +1,7 @@
 module.exports = async () => {
   return {
     middlewares: [require('cors')()],
-
+    globalPathRegex: '',
     routes: [{
       pathRegex: '',
       prefix: '/endpoint-proxy',

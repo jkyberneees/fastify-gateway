@@ -2,6 +2,10 @@
     "$id": "https://github.com/jkyberneees/fastify-gateway/src/config-schema.json",
     "type": "object",
     "properties": {
+      "globalPathRegex": {
+        "$id": "/properties/globalpathregex",
+        "type": "string"
+      },
       "middlewares": {
         "$id": "/properties/middlewares",
         "type": "array"
@@ -81,6 +85,6 @@
     },
     "required": [
       "middlewares",
-      "routes" 
+      "routes"
     ]
   }
