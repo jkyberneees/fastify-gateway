@@ -21,7 +21,7 @@ fastify.register(require('..'), {
     prefixRewrite: '',
     target: 'http://localhost:3001',
     middlewares: [
-      require('express-jwt')({secret: 'shhhhhhared-secret'})
+      require('express-jwt')({ secret: 'shhhhhhared-secret' })
     ],
     hooks: {
     }
