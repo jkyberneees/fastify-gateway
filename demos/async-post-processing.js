@@ -13,7 +13,7 @@ gateway.register(require('..'), {
     target: 'http://localhost:3000',
     middlewares: [],
     hooks: {
-      async onResponse (res, reply) {
+      async onResponse (req, reply, res) {
         const resBuffer = Buffer.concat(await toArray(res))
 
         const payload = JSON.parse(resBuffer.toString())
