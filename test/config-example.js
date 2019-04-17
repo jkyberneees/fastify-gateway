@@ -6,15 +6,11 @@ module.exports = async () => {
       pathRegex: '',
       prefix: '/endpoint-proxy',
       prefixRewrite: '/endpoint-proxy',
-      target: 'http://localhost:3000',
-      middlewares: [],
-      hooks: {
-      }
+      target: 'http://localhost:3000'
     }, {
       prefix: '/users',
       prefixRewrite: '',
       target: 'http://localhost:3000',
-      middlewares: [],
       hooks: {
         async onRequest (req, reply) {},
 
@@ -46,7 +42,6 @@ module.exports = async () => {
       }
     }, {
       prefix: '/users/on-request-error',
-      prefixRewrite: '',
       target: 'http://localhost:3000',
       middlewares: [],
       hooks: {
@@ -60,10 +55,7 @@ module.exports = async () => {
       prefix: '/endpoint-proxy-methods',
       prefixRewrite: '/endpoint-proxy-methods',
       target: 'http://localhost:3000',
-      methods: ['GET', 'POST'],
-      middlewares: [],
-      hooks: {
-      }
+      methods: ['GET', 'POST']
     },
     {
       pathRegex: '',

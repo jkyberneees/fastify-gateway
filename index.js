@@ -14,7 +14,9 @@ const proxy = route => (request, reply) => {
 }
 
 const gateway = (fastify, opts, next) => {
-  configValidate(opts)
+  configValidate(Object.assign({
+    middlewares: []
+  }, opts))
 
   // registering global middlewares
   opts.middlewares.forEach(middleware => {
@@ -22,12 +24,19 @@ const gateway = (fastify, opts, next) => {
   })
 
   opts.routes.forEach(route => {
+    if (undefined === route.prefixRewrite) {
+      route.prefixRewrite = ''
+    }
+
     // registering routes level middlewares
-    route.middlewares.forEach(middleware => {
-      fastify.use(route.prefix, middleware)
-    })
+    if (route.middlewares) {
+      route.middlewares.forEach(middleware => {
+        fastify.use(route.prefix, middleware)
+      })
+    }
 
     // populating required NOOPS
+    route.hooks = route.hooks || {}
     route.hooks.onRequest = route.hooks.onRequest || (async (req, reply) => { })
     route.hooks.onResponse = route.hooks.onResponse || ((req, reply, res) => reply.send(res))
 
