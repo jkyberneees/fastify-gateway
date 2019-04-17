@@ -38,20 +38,13 @@ fastify.register(require('k-fastify-gateway'), {
     }
   }, {
     prefix: '/admin',
-    prefixRewrite: '',
     target: 'http://localhost:3001',
     middlewares: [
       require('basic-auth-connect')('admin', 's3cr3t-pass')
-    ],
-    hooks: {
-    }
+    ]
   }, {
     prefix: '/user',
-    prefixRewrite: '',
-    target: 'http://localhost:3001',
-    middlewares: [],
-    hooks: {
-    }
+    target: 'http://localhost:3001'
   }]
 })
 
@@ -81,7 +74,7 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
 
 ```js 
 {
-  // global middlewares (https://www.fastify.io/docs/latest/Middlewares/)
+  //Optional global middlewares (https://www.fastify.io/docs/latest/Middlewares/). Default value: []
   middlewares: [],
 
   // HTTP proxy
@@ -91,15 +84,15 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
     pathRegex: '/*'
     // route prefix
     prefix: '/public',
-    // prefix rewrite before request is forwarded
+    // Optional "prefix rewrite" before request is forwarded. Default value: ''
     prefixRewrite: '',
     // remote HTTP server URL to forward the request
     target: 'http://localhost:3000',
     // optional HTTP methods to limit the requests proxy to certain verbs only
     methods: ['GET', 'POST', ...], // any of supported HTTP methods: https://github.com/fastify/fastify/blob/master/docs/Routes.md#full-declaration
-    // route level middlewares
+    // Optional route level middlewares. Default value: []
     middlewares: [],
-    // proxy lifecycle hooks
+    // Optional proxy lifecycle hooks. Default value: {}
     hooks: {
       async onRequest (req, reply) {
       //   // we can optionally reply from here if required

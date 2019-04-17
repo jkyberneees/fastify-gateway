@@ -17,7 +17,6 @@
               "$id": "/properties/routes/items/properties/prefix",
               "type": "string",
               "title": "The Prefix Schema ",
-              "default": "",
               "minLength": 2,
               "examples": [
                 "/v1/users"
@@ -27,7 +26,6 @@
               "$id": "/properties/routes/items/properties/prefixRewrite",
               "type": "string",
               "title": "The PrefixRewrite Schema ",
-              "default": "",
               "examples": [
                 "/v1"
               ]
@@ -36,7 +34,6 @@
               "$id": "/properties/routes/items/properties/target",
               "type": "string",
               "title": "The Target Schema ",
-              "default": "",
               "examples": [
                 "http://users.api:3000"
               ]
@@ -45,7 +42,6 @@
               "$id": "/properties/routes/items/properties/pathRegex",
               "type": "string",
               "title": "The PathRegex Schema ",
-              "default": "/*",
               "examples": [
                 "/*",
                 "*"
@@ -72,15 +68,12 @@
             }
           },
           "required": [
-            "target",
-            "middlewares",
-            "hooks"
+            "target"
           ]
         }
       }
     },
     "required": [
-      "middlewares",
       "routes" 
     ]
   }
