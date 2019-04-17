@@ -6,6 +6,16 @@
         "$id": "/properties/middlewares",
         "type": "array"
       },
+      "pathRegex": {
+        "$id": "/properties/pathRegex",
+        "type": "string",
+        "title": "Global PathRegex Schema ",
+        "examples": [
+          "/*",
+          "*",
+          ""
+        ]
+      },
       "routes": {
         "$id": "/properties/routes",
         "type": "array",
