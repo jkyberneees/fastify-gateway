@@ -74,14 +74,16 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
 
 ```js 
 {
-  //Optional global middlewares (https://www.fastify.io/docs/latest/Middlewares/). Default value: []
+  // Optional global middlewares (https://www.fastify.io/docs/latest/Middlewares/). Default value: []
   middlewares: [],
+  // Optional global value for routes "pathRegex". Default value: '/*'
+  pathRegex: '/*',
 
   // HTTP proxy
   routes: [{
     // Optional path matching regex. Default value: '/*'
     // In order to disable the 'pathRegex' at all, you can use an empty string: ''
-    pathRegex: '/*'
+    pathRegex: '/*',
     // route prefix
     prefix: '/public',
     // Optional "prefix rewrite" before request is forwarded. Default value: ''
