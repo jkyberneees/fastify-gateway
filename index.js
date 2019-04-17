@@ -14,9 +14,11 @@ const proxy = route => (request, reply) => {
 }
 
 const gateway = (fastify, opts, next) => {
-  configValidate(Object.assign({
-    middlewares: []
-  }, opts))
+  opts = Object.assign({
+    middlewares: [],
+    pathRegex: '/*'
+  }, opts)
+  configValidate(opts)
 
   // registering global middlewares
   opts.middlewares.forEach(middleware => {
@@ -41,7 +43,7 @@ const gateway = (fastify, opts, next) => {
     route.hooks.onResponse = route.hooks.onResponse || ((req, reply, res) => reply.send(res))
 
     // populating pathRegex if missing
-    route.pathRegex = undefined === route.pathRegex ? '/*' : String(route.pathRegex)
+    route.pathRegex = undefined === route.pathRegex ? opts.pathRegex : String(route.pathRegex)
 
     // registering route handler
     route.methods
