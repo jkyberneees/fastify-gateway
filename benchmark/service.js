@@ -1,8 +1,10 @@
-const service = require('restana')({
-  disableResponseEvent: true
-})
+const cero = require('0http')
+const {
+  router,
+  server
+} = cero()
 
-service.get('/hi', (req, res) => {
-  res.send('Hello World!')
+router.on('GET', '/hi', (req, res) => {
+  res.end('Hello World!')
 })
-service.start(3000)
+server.listen(3000)
