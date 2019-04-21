@@ -59,7 +59,7 @@ module.exports = async () => {
     },
     {
       pathRegex: '',
-      prefix: '/endpoint-proxy-methods',
+      prefix: '/endpoint-proxy-methods-put',
       prefixRewrite: '/endpoint-proxy-methods-put',
       target: 'http://localhost:3000',
       methods: ['PUT'],

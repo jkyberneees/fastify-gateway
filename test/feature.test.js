@@ -27,6 +27,7 @@ describe('API Gateway', () => {
 
   it('initialize', async () => {
     // init gateway
+    fastify.register(require('./../src/plugins/cache'))
     fastify.register(require('fastify-reply-from'))
     fastify.register(require('./../index'),
       await require('./config-example')()
@@ -41,15 +42,25 @@ describe('API Gateway', () => {
     remote.get('/info', (req, res) => res.send({
       name: 'fastify-gateway'
     }))
+    remote.get('/cache', (req, res) => {
+      res.setHeader('x-cache-timeout', '5 seconds')
+      res.send({
+        time: new Date().getTime()
+      })
+    })
+    remote.get('/cache-expire', (req, res) => {
+      res.setHeader('x-cache-expire', '/users/cache')
+      res.send({})
+    })
     remote.post('/204', (req, res) => res.send(204)) // https://github.com/jkyberneees/fastify-gateway/issues/11
     remote.get('/endpoint-proxy-methods', (req, res) => res.send({
       name: 'endpoint-proxy-methods'
     }))
-    remote.post('/endpoint-proxy-methods', (req, res) => res.send({
-      name: 'endpoint-proxy-methods'
-    }))
     remote.put('/endpoint-proxy-methods-put', (req, res) => res.send({
       name: 'endpoint-proxy-methods-put'
+    }))
+    remote.post('/endpoint-proxy-methods', (req, res) => res.send({
+      name: 'endpoint-proxy-methods'
     }))
 
     await remote.start(3000)
@@ -97,6 +108,41 @@ describe('API Gateway', () => {
       })
   })
 
+  it('(cache created 1) GET /users/cache - 200', async () => {
+    await request(gateway)
+      .get('/users/cache')
+      .expect(200)
+      .then((response) => {
+        expect(response.headers['x-cache-hit']).to.equal(undefined)
+        expect(typeof response.body.time).to.equal('number')
+      })
+  })
+
+  it('(cache hit) GET /users/cache - 200', async () => {
+    await request(gateway)
+      .get('/users/cache')
+      .expect(200)
+      .then((response) => {
+        expect(response.headers['x-cache-hit']).to.equal('1')
+        expect(typeof response.body.time).to.equal('number')
+      })
+  })
+
+  it('(cache expire) GET /users/cache-expire - 200', async () => {
+    await request(gateway)
+      .get('/users/cache-expire')
+      .expect(200)
+  })
+
+  it('(cache created 2) GET /users/cache - 200', async () => {
+    await request(gateway)
+      .get('/users/cache')
+      .expect(200)
+      .then((response) => {
+        expect(response.headers['x-cache-hit']).to.equal(undefined)
+      })
+  })
+
   it('GET /users/info - 200', async () => {
     await request(gateway)
       .get('/users/info')
@@ -133,9 +179,15 @@ describe('API Gateway', () => {
       })
   })
 
-  it('PUT /endpoint-proxy-methods - 200', async () => {
+  it('PUT /endpoint-proxy-methods - 404', async () => {
     await request(gateway)
       .put('/endpoint-proxy-methods')
+      .expect(404)
+  })
+
+  it('PUT /endpoint-proxy-methods-put - 200', async () => {
+    await request(gateway)
+      .put('/endpoint-proxy-methods-put')
       .expect(200)
       .then((response) => {
         expect(response.body.name).to.equal('endpoint-proxy-methods-put')

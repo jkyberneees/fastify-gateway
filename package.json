@@ -28,7 +28,9 @@
   },
   "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
   "dependencies": {
-    "fastify-reply-from": "^0.6.0"
+    "@nrk/nodecache-as-promised": "^1.3.2",
+    "fastify-reply-from": "^0.6.0",
+    "ms": "^2.1.1"
   },
   "files": [
     "src"

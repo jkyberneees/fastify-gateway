@@ -13,7 +13,7 @@ const proxy = route => (request, reply) => {
   })
 }
 
-const gateway = (fastify, opts, next) => {
+const plugin = (fastify, opts, next) => {
   opts = Object.assign({
     middlewares: [],
     pathRegex: '/*'
@@ -54,4 +54,4 @@ const gateway = (fastify, opts, next) => {
   next()
 }
 
-module.exports = fp(gateway)
+module.exports = fp(plugin)
