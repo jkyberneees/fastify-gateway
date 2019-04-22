@@ -27,7 +27,7 @@ describe('API Gateway', () => {
 
   it('initialize', async () => {
     // init gateway
-    fastify.register(require('./../src/plugins/cache'))
+    fastify.register(require('./../src/plugins/cache'), {})
     fastify.register(require('fastify-reply-from'))
     fastify.register(require('./../index'),
       await require('./config-example')()
@@ -43,13 +43,17 @@ describe('API Gateway', () => {
       name: 'fastify-gateway'
     }))
     remote.get('/cache', (req, res) => {
-      res.setHeader('x-cache-timeout', '5 seconds')
+      res.setHeader('x-cache-timeout', '1 second')
       res.send({
         time: new Date().getTime()
       })
     })
     remote.get('/cache-expire', (req, res) => {
       res.setHeader('x-cache-expire', '/users/cache')
+      res.send({})
+    })
+    remote.get('/cache-expire-pattern', (req, res) => {
+      res.setHeader('x-cache-expire', '/users/*')
       res.send({})
     })
     remote.post('/204', (req, res) => res.send(204)) // https://github.com/jkyberneees/fastify-gateway/issues/11
@@ -135,7 +139,22 @@ describe('API Gateway', () => {
   })
 
   it('(cache created 2) GET /users/cache - 200', async () => {
+    return request(gateway)
+      .get('/users/cache')
+      .expect(200)
+      .then((response) => {
+        expect(response.headers['x-cache-hit']).to.equal(undefined)
+      })
+  })
+
+  it('(cache expire pattern) GET /users/cache-expire-pattern - 200', async () => {
     await request(gateway)
+      .get('/users/cache-expire-pattern')
+      .expect(200)
+  })
+
+  it('(cache created 3) GET /users/cache - 200', async () => {
+    return request(gateway)
       .get('/users/cache')
       .expect(200)
       .then((response) => {
@@ -200,12 +219,22 @@ describe('API Gateway', () => {
       .expect(404)
   })
 
-  it('GET /users/proxy-aborted/info - 200', async () => {
+  it('(cache created) GET /users/proxy-aborted/info - 200', async () => {
     await request(gateway)
       .get('/users/proxy-aborted/info')
       .expect(200)
       .then((response) => {
         expect(response.text).to.equal('Hello World!')
+      })
+  })
+
+  it('(cache hit) GET /users/proxy-aborted/info - 200', async () => {
+    await request(gateway)
+      .get('/users/proxy-aborted/info')
+      .expect(200)
+      .then((response) => {
+        expect(response.text).to.equal('Hello World!')
+        expect(response.headers['x-cache-hit']).to.equal('1')
       })
   })
 

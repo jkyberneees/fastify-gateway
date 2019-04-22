@@ -24,7 +24,9 @@ module.exports = async () => {
       middlewares: [],
       hooks: {
         async onRequest (req, reply) {
+          reply.header('x-cache-timeout', '1 second')
           reply.code(200).send('Hello World!')
+
           return true
         }
       }

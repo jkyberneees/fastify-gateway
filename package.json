@@ -4,7 +4,7 @@
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha test/*.test.js",
+    "test": "nyc mocha test/*.test.js --exit",
     "format": "npx standard --fix",
     "lint": "npx standard",
     "bench-pm2": "( pm2 start benchmark/service.js -i 4 && pm2 start benchmark/gateway.js -i 4 & (sleep 5 && wrk -t8 -c8 -d30s http://127.0.0.1:8080/service/hi && pm2 delete all) )",
@@ -28,8 +28,9 @@
   },
   "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
   "dependencies": {
-    "@nrk/nodecache-as-promised": "^1.3.2",
+    "cache-manager": "^2.9.0",
     "fastify-reply-from": "^0.6.0",
+    "matcher": "^2.0.0",
     "ms": "^2.1.1"
   },
   "files": [
@@ -42,7 +43,9 @@
     "express-jwt": "^5.3.1",
     "fastify": "^2.3.0",
     "helmet": "^3.16.0",
-    "mocha": "^6.1.3",
+    "ioredis": "^4.9.0",
+    "ioredis-mock": "^4.9.0",
+    "mocha": "^6.1.4",
     "nyc": "^14.0.0",
     "pm2": "^3.5.0",
     "response-time": "^2.3.2",
