@@ -22,6 +22,8 @@ const plugin = (fastify, opts, next) => {
 
   fastify.addHook('preHandler', async (request, reply, next) => {
     const { req } = request
+    if (req.cacheDisabled) return next()
+
     let { url: key, cacheAppendKey = req => '' } = req
     cacheAppendKey = await cacheAppendKey(req)
 

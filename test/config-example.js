@@ -6,16 +6,21 @@ module.exports = async () => {
       pathRegex: '',
       prefix: '/endpoint-proxy',
       prefixRewrite: '/endpoint-proxy',
-      target: 'http://localhost:3000'
-    }, {
-      prefix: '/users',
       target: 'http://localhost:3000',
+      middlewares: [(req, res, next) => {
+        req.cacheDisabled = true
+
+        return next()
+      }],
       hooks: {
         async onRequest (req, reply) {},
 
         // https://github.com/fastify/fastify-reply-from#replyfromsource-opts
         onResponse (req, reply, res) { reply.send(res) }
       }
+    }, {
+      prefix: '/users',
+      target: 'http://localhost:3000'
     }, {
       prefix: '/users/proxy-aborted',
       target: 'http://localhost:5000',
