@@ -49,11 +49,11 @@ describe('API Gateway', () => {
       })
     })
     remote.get('/cache-expire', (req, res) => {
-      res.setHeader('x-cache-expire', '/users/cache')
+      res.setHeader('x-cache-expire', 'GET/users/cache')
       res.send({})
     })
     remote.get('/cache-expire-pattern', (req, res) => {
-      res.setHeader('x-cache-expire', '/users/*')
+      res.setHeader('x-cache-expire', 'GET/users/*')
       res.send({})
     })
     remote.post('/204', (req, res) => res.send(204)) // https://github.com/jkyberneees/fastify-gateway/issues/11

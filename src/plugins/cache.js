@@ -26,7 +26,7 @@ const plugin = (fastify, opts, next) => {
     let { url: key, cacheAppendKey = req => '' } = req
     cacheAppendKey = await cacheAppendKey(req)
 
-    key = key + cacheAppendKey
+    key = req.method + key + cacheAppendKey
     // ref cache key on req object
     req.cacheKey = key
     const cached = await get(multiCache, key)
@@ -40,10 +40,14 @@ const plugin = (fastify, opts, next) => {
     Object.keys(headers).forEach(header => reply.header(header, headers[header]))
 
     // send cached payload
+    reply.header('Content-Length', 0)
     reply.send(await rparser.out(payload))
   })
 
   fastify.addHook('onSend', (request, reply, payload, next) => {
+    // avoid double caching
+    if (reply.hasHeader(X_CACHE_HIT)) return next()
+
     if (reply.hasHeader(X_CACHE_EXPIRE)) {
       // support service level expiration
       const keysPattern = reply.getHeader(X_CACHE_EXPIRE)
@@ -71,7 +75,7 @@ const plugin = (fastify, opts, next) => {
 }
 
 const get = (cache, key) => new Promise((resolve) => {
-  cache.getAndPassUp(key, (_, res) => {
+  cache.get(key, (_, res) => {
     resolve(res)
   })
 })
