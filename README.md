@@ -114,7 +114,52 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
   }]
 }
 ```
-### Breaking changes
+## Gateway level caching
+### Why?
+> Because `caching` is the last mile for low lateny distributed systems!  
+
+Enabling proper caching strategies at gateway level will drastically reduce the latency of your system,
+as it reduces network round-trips and remote services processing.  
+We are talking here about improvements in response times from `~100ms` to `~2ms`, as an example.  
+
+###  Setting up gateway cache
+#### Single node cache (memory):
+```js
+// cache plugin setup
+const gateway = require('fastify')({})
+gateway.register(require('k-fastify-gateway/src/plugins/cache'), {})
+```
+> Recommended if there is only one gateway instance
+
+#### Multi nodes cache (redis):
+```js
+// redis setup
+const CacheManager = require('cache-manager')
+const redisStore = require('cache-manager-ioredis')
+const redisCache = CacheManager.caching({
+  store: redisStore,
+  db: 0,
+  host: 'localhost',
+  port: 6379,
+  ttl: 30
+})
+
+// cache plugin setup
+const gateway = require('fastify')({})
+gateway.register(require('k-fastify-gateway/src/plugins/cache'), {
+  stores: [redisCache]
+})
+```
+> Required if there are more than one gateway instances
+
+### Enabling cache for service endpoints
+Services are in control...
+
+### Invalidating cache
+> Let's face it, gateway level cache invalidation was complex..., until now!  
+
+
+## Breaking changes
 In `v2.x` the `hooks.onResponse` signature has changed from:
 ```js
 onResponse (res, reply)
