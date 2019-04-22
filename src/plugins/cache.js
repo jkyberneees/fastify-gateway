@@ -14,10 +14,12 @@ const {
 
 const plugin = (fastify, opts, next) => {
   opts = Object.assign({
+    id: Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2),
     stores: [CacheManager.caching({ store: 'memory', max: 1000, ttl: 10 })]
   }, opts)
+
   // creating multi-cache instance
-  const mcache = CacheManager.multiCaching(opts.stores)
+  const multiCache = CacheManager.multiCaching(opts.stores)
 
   fastify.addHook('preHandler', async (request, reply, next) => {
     const { req } = request
@@ -27,7 +29,7 @@ const plugin = (fastify, opts, next) => {
     key = key + cacheAppendKey
     // ref cache key on req object
     req.cacheKey = key
-    const cached = await get(mcache, key)
+    const cached = await get(multiCache, key)
     if (!cached) return next()
 
     // respond from cache if there is a hit
@@ -45,21 +47,19 @@ const plugin = (fastify, opts, next) => {
     if (reply.hasHeader(X_CACHE_EXPIRE)) {
       // support service level expiration
       const keysPattern = reply.getHeader(X_CACHE_EXPIRE)
-      for (let cache of opts.stores) {
-        getKeys(cache, keysPattern)
-          .then(keys => {
-            keys.forEach(key => mcache.del(key))
-          })
-      }
+      // delete keys on all cache tiers
+      opts.stores.forEach(cache => getKeys(cache, keysPattern).then(keys => multiCache.del(keys)))
     } else if (reply.hasHeader(X_CACHE_TIMEOUT)) {
       const { req } = request
       // we need to cache response
       rparser.in(payload).then(payload => {
-        mcache.set(req.cacheKey, JSON.stringify({
+        multiCache.set(req.cacheKey, JSON.stringify({
           headers: reply[kReplyHeaders],
           payload
         }), {
-          ttl: Math.max(ms(reply.getHeader(X_CACHE_TIMEOUT)), 1000) / 1000 // restrict to min value "1 second"
+          // @NOTE: cache-manager uses seconds as TTL unit
+          // restrict to min value "1 second"
+          ttl: Math.max(ms(reply.getHeader(X_CACHE_TIMEOUT)), 1000) / 1000
         })
       })
     }
@@ -71,7 +71,7 @@ const plugin = (fastify, opts, next) => {
 }
 
 const get = (cache, key) => new Promise((resolve, reject) => {
-  cache.get(key, (_, res) => {
+  cache.getAndPassUp(key, (_, res) => {
     resolve(res)
   })
 })
