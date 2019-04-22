@@ -116,7 +116,7 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
 ```
 ## Gateway level caching
 ### Why?
-> Because `caching` is the last mile for low lateny distributed systems!  
+> Because `caching` is the last mile for low latency distributed systems!  
 
 Enabling proper caching strategies at gateway level will drastically reduce the latency of your system,
 as it reduces network round-trips and remote services processing.  
