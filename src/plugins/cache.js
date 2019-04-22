@@ -9,7 +9,7 @@ const X_CACHE_TIMEOUT = 'x-cache-timeout'
 const X_CACHE_HIT = 'x-cache-hit'
 
 const {
-  kReplyHeaders
+  kReplyHeaders: FASTIFY_HEADERS
 } = require('fastify/lib/symbols')
 
 const plugin = (fastify, opts, next) => {
@@ -60,7 +60,7 @@ const plugin = (fastify, opts, next) => {
       // we need to cache response
       rparser.in(payload).then(payload => {
         multiCache.set(req.cacheKey, JSON.stringify({
-          headers: reply[kReplyHeaders],
+          headers: reply[FASTIFY_HEADERS],
           payload
         }), {
           // @NOTE: cache-manager uses seconds as TTL unit
