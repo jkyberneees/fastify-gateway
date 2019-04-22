@@ -219,7 +219,7 @@ describe('API Gateway', () => {
       .expect(404)
   })
 
-  it('(cache created) GET /users/proxy-aborted/info - 200', async () => {
+  it('(aggregation cache created) GET /users/proxy-aborted/info - 200', async () => {
     await request(gateway)
       .get('/users/proxy-aborted/info')
       .expect(200)
@@ -228,7 +228,7 @@ describe('API Gateway', () => {
       })
   })
 
-  it('(cache hit) GET /users/proxy-aborted/info - 200', async () => {
+  it('(aggregation cache hit) GET /users/proxy-aborted/info - 200', async () => {
     await request(gateway)
       .get('/users/proxy-aborted/info')
       .expect(200)
@@ -236,6 +236,19 @@ describe('API Gateway', () => {
         expect(response.text).to.equal('Hello World!')
         expect(response.headers['x-cache-hit']).to.equal('1')
       })
+  })
+
+  it('(aggregation cache created after expire) GET /users/proxy-aborted/info - 200', (done) => {
+    setTimeout(() => {
+      request(gateway)
+        .get('/users/proxy-aborted/info')
+        .expect(200)
+        .then((response) => {
+          expect(response.text).to.equal('Hello World!')
+          expect(response.headers['x-cache-hit']).to.equal(undefined)
+          done()
+        })
+    }, 1100)
   })
 
   it('POST /users/info - 404', async () => {
