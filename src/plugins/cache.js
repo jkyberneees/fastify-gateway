@@ -75,7 +75,7 @@ const plugin = (fastify, opts, next) => {
 }
 
 const get = (cache, key) => new Promise((resolve) => {
-  cache.get(key, (_, res) => {
+  cache.getAndPassUp(key, (_, res) => {
     resolve(res)
   })
 })
