@@ -9,7 +9,6 @@ module.exports = async () => {
       target: 'http://localhost:3000'
     }, {
       prefix: '/users',
-      prefixRewrite: '',
       target: 'http://localhost:3000',
       hooks: {
         async onRequest (req, reply) {},
@@ -19,9 +18,7 @@ module.exports = async () => {
       }
     }, {
       prefix: '/users/proxy-aborted',
-      prefixRewrite: '',
       target: 'http://localhost:5000',
-      middlewares: [],
       hooks: {
         async onRequest (req, reply) {
           reply.header('x-cache-timeout', '1 second')
@@ -45,7 +42,6 @@ module.exports = async () => {
     }, {
       prefix: '/users/on-request-error',
       target: 'http://localhost:3000',
-      middlewares: [],
       hooks: {
         async onRequest (req, reply) {
           throw new Error('ups, pre-processing error...')
@@ -64,10 +60,7 @@ module.exports = async () => {
       prefix: '/endpoint-proxy-methods-put',
       prefixRewrite: '/endpoint-proxy-methods-put',
       target: 'http://localhost:3000',
-      methods: ['PUT'],
-      middlewares: [],
-      hooks: {
-      }
+      methods: ['PUT']
     }]
   }
 }
