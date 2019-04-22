@@ -14,7 +14,6 @@ const {
 
 const plugin = (fastify, opts, next) => {
   opts = Object.assign({
-    id: Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2),
     stores: [CacheManager.caching({ store: 'memory', max: 1000, ttl: 30 })]
   }, opts)
 
@@ -40,13 +39,15 @@ const plugin = (fastify, opts, next) => {
     Object.keys(headers).forEach(header => reply.header(header, headers[header]))
 
     // send cached payload
-    reply.header('Content-Length', 0)
+    req.cacheHit = true
     reply.send(await rparser.out(payload))
   })
 
   fastify.addHook('onSend', (request, reply, payload, next) => {
+    const { req } = request
+
     // avoid double caching
-    if (reply.hasHeader(X_CACHE_HIT)) return next()
+    if (req.cacheHit) return next()
 
     if (reply.hasHeader(X_CACHE_EXPIRE)) {
       // support service level expiration
@@ -54,7 +55,6 @@ const plugin = (fastify, opts, next) => {
       // delete keys on all cache tiers
       opts.stores.forEach(cache => getKeys(cache, keysPattern).then(keys => multiCache.del(keys)))
     } else if (reply.hasHeader(X_CACHE_TIMEOUT)) {
-      const { req } = request
       // we need to cache response
       rparser.in(payload).then(payload => {
         multiCache.set(req.cacheKey, JSON.stringify({
