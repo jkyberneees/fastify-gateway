@@ -15,7 +15,7 @@ const {
 const plugin = (fastify, opts, next) => {
   opts = Object.assign({
     id: Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2),
-    stores: [CacheManager.caching({ store: 'memory', max: 1000, ttl: 10 })]
+    stores: [CacheManager.caching({ store: 'memory', max: 1000, ttl: 30 })]
   }, opts)
 
   // creating multi-cache instance
@@ -70,18 +70,15 @@ const plugin = (fastify, opts, next) => {
   next()
 }
 
-const get = (cache, key) => new Promise((resolve, reject) => {
+const get = (cache, key) => new Promise((resolve) => {
   cache.getAndPassUp(key, (_, res) => {
     resolve(res)
   })
 })
 
-const getKeys = (cache, pattern) => new Promise((resolve, reject) => {
+const getKeys = (cache, pattern) => new Promise((resolve) => {
   if (pattern.indexOf('*') > -1) {
-    cache.keys((_, res) => {
-      const matches = matcher(res, [pattern])
-      resolve(matches)
-    })
+    cache.keys((_, res) => resolve(matcher(res, [pattern])))
   } else resolve([pattern])
 })
 
