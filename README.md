@@ -120,7 +120,7 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
 
 Enabling proper caching strategies at gateway level will drastically reduce the latency of your system,
 as it reduces network round-trips and remote services processing.  
-We are talking here about improvements in response times from `~100ms` to `~2ms`, as an example.  
+We are talking here about improvements in response times from `X ms` to `~2ms`, as an example.  
 
 ###  Setting up gateway cache
 #### Single node cache (memory):
@@ -153,10 +153,49 @@ gateway.register(require('k-fastify-gateway/src/plugins/cache'), {
 > Required if there are more than one gateway instances
 
 ### Enabling cache for service endpoints
-Services are in control...
+Although API Gateway level cache aims as a centralized cache for all services behind the wall, are the services
+the ones who indicate the responses to be cached and for how long.  
+
+Cache entries will be created for all remote responses coming with the `x-cache-timeout` header:
+```js
+res.setHeader('x-cache-timeout', '1 hour')
+```
+> Here we use the [`ms`](`https://www.npmjs.com/package/ms`) package to convert timeout to seconds. Please note that `millisecond` unit is not supported!  
+
+Example on remote service using `restana`:
+```js
+const service = require('restana')({})
+service.get('/numbers', (req, res) => {
+  res.setHeader('x-cache-timeout', '1 hour') 
+
+  res.send([
+    1, 2, 3
+  ])
+})
+```
 
 ### Invalidating cache
 > Let's face it, gateway level cache invalidation was complex..., until now!  
+
+Remote services can also expire cache entries on demand, i.e: when the data state changes. Here we use the `x-cache-expire` header to indicate the gateway cache entries to expire using a matching pattern:
+```js
+res.setHeader('x-cache-expire', '*/numbers')
+```
+> Here we use the [`matcher`](`https://www.npmjs.com/package/matcher`) package for matching patterns evaluation. 
+
+Example on remote service using `restana`:
+```js
+service.patch('/numbers', (req, res) => {
+  res.setHeader('x-cache-expire', '*/numbers') 
+  res.send(200)
+})
+```
+
+### Custom cache keys
+
+
+
+### Disable cache for custom endpoints
 
 
 ## Breaking changes
