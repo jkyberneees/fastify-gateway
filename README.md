@@ -164,7 +164,6 @@ res.setHeader('x-cache-timeout', '1 hour')
 
 Example on remote service using `restana`:
 ```js
-const service = require('restana')({})
 service.get('/numbers', (req, res) => {
   res.setHeader('x-cache-timeout', '1 hour') 
 
@@ -187,16 +186,42 @@ Example on remote service using `restana`:
 ```js
 service.patch('/numbers', (req, res) => {
   res.setHeader('x-cache-expire', '*/numbers') 
+
+  // ...
   res.send(200)
 })
 ```
 
 ### Custom cache keys
+Cache keys are generated using: `req.method + req.url`, however, for indexing/segmenting requirements it makes sense to allow cache keys extensions.  
+Unfortunately, this feature can't be implemented at remote service level, because the gateway needs to know the entire lookup key when a request 
+reaches the gateway.  
 
-
+For doing this, we simply recommend using middlewares on the service configuration:
+```js
+routes: [{
+  prefix: '/users',
+  target: 'http://localhost:3000',
+  middlewares: [(req, res, next) => {
+    req.cacheAppendKey = (req) => req.user.id // here cache key will be: req.method + req.url + req.user.id
+    return next()
+  }]
+}]
+```
+> In this example we also distinguish cache entries by `user.id`, very common case!
 
 ### Disable cache for custom endpoints
-
+You can also disable cache checks for certain requests programmatically:
+```js
+routes: [{
+  prefix: '/users',
+  target: 'http://localhost:3000',
+  middlewares: [(req, res, next) => {
+    req.cacheDisabled = true
+    return next()
+  }]
+}]
+```
 
 ## Breaking changes
 In `v2.x` the `hooks.onResponse` signature has changed from:
@@ -231,3 +256,6 @@ Transfer/sec:      1.42MB
 This is your repo ;)  
 
 > Note: We aim to be 100% code coverage, please consider it on your pull requests.
+
+## Related projects
+- middleware-if-unless (https://www.npmjs.com/package/middleware-if-unless)
