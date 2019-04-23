@@ -114,7 +114,116 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
   }]
 }
 ```
-### Breaking changes
+## Gateway level caching
+### Why?
+> Because `caching` is the last mile for low latency distributed systems!  
+
+Enabling proper caching strategies at gateway level will drastically reduce the latency of your system,
+as it reduces network round-trips and remote services processing.  
+We are talking here about improvements in response times from `X ms` to `~2ms`, as an example.  
+
+###  Setting up gateway cache
+#### Single node cache (memory):
+```js
+// cache plugin setup
+const gateway = require('fastify')({})
+gateway.register(require('k-fastify-gateway/src/plugins/cache'), {})
+```
+> Recommended if there is only one gateway instance
+
+#### Multi nodes cache (redis):
+```js
+// redis setup
+const CacheManager = require('cache-manager')
+const redisStore = require('cache-manager-ioredis')
+const redisCache = CacheManager.caching({
+  store: redisStore,
+  db: 0,
+  host: 'localhost',
+  port: 6379,
+  ttl: 30
+})
+
+// cache plugin setup
+const gateway = require('fastify')({})
+gateway.register(require('k-fastify-gateway/src/plugins/cache'), {
+  stores: [redisCache]
+})
+```
+> Required if there are more than one gateway instances
+
+### Enabling cache for service endpoints
+Although API Gateway level cache aims as a centralized cache for all services behind the wall, are the services
+the ones who indicate the responses to be cached and for how long.  
+
+Cache entries will be created for all remote responses coming with the `x-cache-timeout` header:
+```js
+res.setHeader('x-cache-timeout', '1 hour')
+```
+> Here we use the [`ms`](`https://www.npmjs.com/package/ms`) package to convert timeout to seconds. Please note that `millisecond` unit is not supported!  
+
+Example on remote service using `restana`:
+```js
+service.get('/numbers', (req, res) => {
+  res.setHeader('x-cache-timeout', '1 hour') 
+
+  res.send([
+    1, 2, 3
+  ])
+})
+```
+
+### Invalidating cache
+> Let's face it, gateway level cache invalidation was complex..., until now!  
+
+Remote services can also expire cache entries on demand, i.e: when the data state changes. Here we use the `x-cache-expire` header to indicate the gateway cache entries to expire using a matching pattern:
+```js
+res.setHeader('x-cache-expire', '*/numbers')
+```
+> Here we use the [`matcher`](`https://www.npmjs.com/package/matcher`) package for matching patterns evaluation. 
+
+Example on remote service using `restana`:
+```js
+service.patch('/numbers', (req, res) => {
+  res.setHeader('x-cache-expire', '*/numbers') 
+
+  // ...
+  res.send(200)
+})
+```
+
+### Custom cache keys
+Cache keys are generated using: `req.method + req.url`, however, for indexing/segmenting requirements it makes sense to allow cache keys extensions.  
+Unfortunately, this feature can't be implemented at remote service level, because the gateway needs to know the entire lookup key when a request 
+reaches the gateway.  
+
+For doing this, we simply recommend using middlewares on the service configuration:
+```js
+routes: [{
+  prefix: '/users',
+  target: 'http://localhost:3000',
+  middlewares: [(req, res, next) => {
+    req.cacheAppendKey = (req) => req.user.id // here cache key will be: req.method + req.url + req.user.id
+    return next()
+  }]
+}]
+```
+> In this example we also distinguish cache entries by `user.id`, very common case!
+
+### Disable cache for custom endpoints
+You can also disable cache checks for certain requests programmatically:
+```js
+routes: [{
+  prefix: '/users',
+  target: 'http://localhost:3000',
+  middlewares: [(req, res, next) => {
+    req.cacheDisabled = true
+    return next()
+  }]
+}]
+```
+
+## Breaking changes
 In `v2.x` the `hooks.onResponse` signature has changed from:
 ```js
 onResponse (res, reply)
@@ -147,3 +256,6 @@ Transfer/sec:      1.42MB
 This is your repo ;)  
 
 > Note: We aim to be 100% code coverage, please consider it on your pull requests.
+
+## Related projects
+- middleware-if-unless (https://www.npmjs.com/package/middleware-if-unless)
