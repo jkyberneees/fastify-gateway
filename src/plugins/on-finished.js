@@ -3,7 +3,6 @@
 module.exports = (res, cb) => {
   res._parent = {
     write: res.write,
-    writeHead: res.writeHead,
     end: res.end,
     content: undefined
   }
@@ -45,7 +44,6 @@ function accumulate (res, content) {
       if (typeof oldContent === 'string') {
         oldContent = Buffer.from(oldContent)
       }
-
       if (!oldContent) {
         oldContent = Buffer.alloc(0)
       }
