@@ -4,7 +4,8 @@ module.exports = (res, cb) => {
   res._parent = {
     write: res.write,
     end: res.end,
-    content: undefined
+    content: undefined,
+    ended: false
   }
 
   res.write = function (content) {
@@ -13,13 +14,17 @@ module.exports = (res, cb) => {
   }
 
   res.end = function (content, encoding) {
-    accumulate(res, content)
-    const headers = res._headers
-    const payload = map(res.statusCode, headers, res._parent.content, encoding)
+    if (!res._parent.ended) {
+      res._parent.ended = true
 
-    setImmediate(() => {
-      cb(payload)
-    })
+      accumulate(res, content)
+      const headers = res.getHeaders()
+      const payload = map(res.statusCode, headers, res._parent.content, encoding)
+
+      setImmediate(() => {
+        cb(payload)
+      })
+    }
 
     return res._parent.end.apply(res, arguments)
   }
@@ -36,7 +41,7 @@ function map (status, headers, data, encoding) {
 
 function accumulate (res, content) {
   if (content) {
-    if (typeof (content) === 'string') {
+    if (typeof content === 'string') {
       res._parent.content = (res._parent.content || '') + content
     } else if (Buffer.isBuffer(content)) {
       let oldContent = res._parent.content
