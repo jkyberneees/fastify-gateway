@@ -2,7 +2,7 @@ const fp = require('fastify-plugin')
 const CacheManager = require('cache-manager')
 const ms = require('ms')
 const onFinished = require('./on-finished')
-const matcher = require('matcher')
+const getKeys = require('./get-keys')
 
 const X_CACHE_EXPIRE = 'x-cache-expire'
 const X_CACHE_TIMEOUT = 'x-cache-timeout'
@@ -79,12 +79,6 @@ const get = (cache, key) => new Promise((resolve) => {
   cache.getAndPassUp(key, (_, res) => {
     resolve(res)
   })
-})
-
-const getKeys = (cache, pattern) => new Promise((resolve) => {
-  if (pattern.indexOf('*') > -1) {
-    cache.keys((_, res) => resolve(matcher(res, [pattern])))
-  } else resolve([pattern])
 })
 
 module.exports = fp(plugin)
