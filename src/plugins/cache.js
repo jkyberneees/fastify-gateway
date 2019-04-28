@@ -28,9 +28,7 @@ const plugin = (fastify, opts, next) => {
         // support service level expiration
         const keysPattern = payload.headers[X_CACHE_EXPIRE]
         // delete keys on all cache tiers
-        opts.stores.forEach(cache => getKeys(cache, keysPattern).then(keys => {
-          multiCache.del(keys)
-        }))
+        opts.stores.forEach(cache => getKeys(cache, keysPattern).then(keys => multiCache.del(keys)))
       } else if (payload.headers[X_CACHE_TIMEOUT]) {
         // we need to cache response
         multiCache.set(req.cacheKey, JSON.stringify(payload), {
