@@ -4,9 +4,6 @@ const gateway = require('fastify')({})
 gateway.register(require('fastify-reply-from'))
 gateway.register(require('..'), {
 
-  middlewares: [
-  ],
-
   routes: [{
     prefix: '/api',
     prefixRewrite: '',
@@ -29,10 +26,10 @@ gateway.listen(8080).then((address) => {
   console.log(`API Gateway listening on ${address}`)
 })
 
-const remote = require('restana')({})
-remote.get('/info', (req, res) => res.send({
+const service = require('restana')({})
+service.get('/info', (req, res) => res.send({
   name: 'fastify-gateway'
 }))
-remote.start(3000).then(() => {
+service.start(3000).then(() => {
   console.log(`Remote service listening on port 3000`)
 })

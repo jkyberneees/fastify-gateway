@@ -2,9 +2,6 @@ const fastify = require('fastify')({})
 fastify.register(require('fastify-reply-from'))
 fastify.register(require('..'), {
 
-  middlewares: [
-  ],
-
   routes: [{
     pathRegex: '',
     prefix: '/user/:id/details',

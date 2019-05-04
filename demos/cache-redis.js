@@ -14,6 +14,7 @@ gateway.register(require('./../src/plugins/cache'), {
 })
 gateway.register(require('fastify-reply-from'))
 gateway.register(require('..'), {
+
   routes: [{
     prefix: '/api',
     target: 'http://localhost:3000'
