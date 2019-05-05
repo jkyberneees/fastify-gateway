@@ -45,7 +45,6 @@ const users = require('restana')({})
 users
   .get('/users/exist/:userId', (req, res) => {
     res.setHeader('x-cache-timeout', '1 day')
-
     setTimeout(() => {
       if (req.params.userId !== '1') {
         return res.send(404)
