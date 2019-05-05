@@ -11,9 +11,8 @@ gateway.register(require('./../index'), {
     middlewares: [],
     hooks: {
       async onResponse (req, reply, res) {
-        const resBuffer = Buffer.concat(await toArray(res))
-
-        const payload = JSON.parse(resBuffer.toString())
+        const buffer = Buffer.concat(await toArray(res))
+        const payload = JSON.parse(buffer.toString())
         payload.newProperty = 'new value'
 
         reply.header('Content-Length', 0).send(payload)
