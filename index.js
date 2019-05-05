@@ -1,16 +1,16 @@
 const configValidate = require('./src/config-validate')
 const fp = require('fastify-plugin')
 
-const proxy = route => (request, reply) => {
-  request.req.url = request.req.url.replace(route.prefix, route.prefixRewrite)
-  route.hooks.onRequest(request, reply).then(shouldAbortProxy => {
-    // check if request proxy to remote should be aborted
+const proxy = route => async (request, reply) => {
+  try {
+    request.req.url = request.req.url.replace(route.prefix, route.prefixRewrite)
+    const shouldAbortProxy = await route.hooks.onRequest(request, reply)
     if (!shouldAbortProxy) {
       reply.from(route.target + request.req.url, Object.assign({}, route.hooks))
     }
-  }).catch(err => {
+  } catch (err) {
     reply.send(err)
-  })
+  }
 }
 
 const plugin = (fastify, opts, next) => {
