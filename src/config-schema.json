@@ -1,89 +1,89 @@
 {
-    "$id": "https://github.com/jkyberneees/fastify-gateway/src/config-schema.json",
-    "type": "object",
-    "properties": {
-      "middlewares": {
-        "$id": "/properties/middlewares",
-        "type": "array"
-      },
-      "pathRegex": {
-        "$id": "/properties/pathRegex",
-        "type": "string",
-        "title": "Global PathRegex Schema ",
-        "examples": [
-          "/*",
-          "*",
-          ""
-        ]
-      },
-      "routes": {
-        "$id": "/properties/routes",
-        "type": "array",
-        "items": {
-          "$id": "/properties/routes/items",
-          "type": "object",
-          "properties": {
-            "prefix": {
-              "$id": "/properties/routes/items/properties/prefix",
-              "type": "string",
-              "title": "The Prefix Schema ",
-              "minLength": 2,
-              "examples": [
-                "/v1/users"
-              ]
-            },
-            "prefixRewrite": {
-              "$id": "/properties/routes/items/properties/prefixRewrite",
-              "type": "string",
-              "title": "The PrefixRewrite Schema ",
-              "examples": [
-                "/v1"
-              ]
-            },
-            "target": {
-              "$id": "/properties/routes/items/properties/target",
-              "type": "string",
-              "title": "The Target Schema ",
-              "examples": [
-                "http://users.api:3000"
-              ]
-            },
-            "pathRegex": {
-              "$id": "/properties/routes/items/properties/pathRegex",
-              "type": "string",
-              "title": "The PathRegex Schema ",
-              "examples": [
-                "/*",
-                "*"
-              ]
-            },
-            "methods": {
-              "$id": "/properties/routes/items/properties/methods",
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": ["DELETE", "GET", "HEAD", "PATCH", "POST", "PUT", "OPTIONS"]
-              },
-              "examples": [
-                ["GET"]
-              ]
-            },
-            "middlewares": {
-              "$id": "/properties/routes/items/properties/middlewares",
-              "type": "array"
-            },
-            "hooks": {
-              "$id": "/properties/routes/items/properties/hooks",
-              "type": "object"
-            }
-          },
-          "required": [
-            "target"
-          ]
-        }
-      }
+  "$id": "https://github.com/jkyberneees/fastify-gateway/src/config-schema.json",
+  "type": "object",
+  "properties": {
+    "middlewares": {
+      "type": "array"
     },
-    "required": [
-      "routes" 
-    ]
-  }
+    "pathRegex": {
+      "type": "string",
+      "title": "Global PathRegex Schema ",
+      "examples": [
+        "/*",
+        "*",
+        ""
+      ]
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "prefix": {
+            "type": "string",
+            "title": "The Prefix Schema ",
+            "minLength": 2,
+            "examples": [
+              "/v1/users"
+            ]
+          },
+          "prefixRewrite": {
+            "type": "string",
+            "title": "The PrefixRewrite Schema ",
+            "examples": [
+              "/v1"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "title": "The Target Schema ",
+            "examples": [
+              "http://users.api:3000"
+            ]
+          },
+          "pathRegex": {
+            "type": "string",
+            "title": "The PathRegex Schema ",
+            "examples": [
+              "/*",
+              "*"
+            ]
+          },
+          "methods": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DELETE",
+                "GET",
+                "HEAD",
+                "PATCH",
+                "POST",
+                "PUT",
+                "OPTIONS"
+              ]
+            },
+            "examples": [
+              [
+                "GET"
+              ]
+            ]
+          },
+          "middlewares": {
+            "type": "array"
+          },
+          "hooks": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "target",
+          "prefix"
+        ]
+      }
+    }
+  },
+  "required": [
+    "routes"
+  ]
+}
