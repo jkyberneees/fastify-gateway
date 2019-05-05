@@ -8,7 +8,7 @@ const boom = require('boom')
 const gateway = require('fastify')({})
 gateway.register(require('fastify-boom'))
 gateway.register(require('fastify-reply-from'))
-gateway.register(require('./../src/plugins/cache'), {})
+gateway.register(require('../src/plugins/cache'), {})
 gateway.register(require('../index'), {
 
   routes: [{
