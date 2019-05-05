@@ -49,6 +49,7 @@
     "helmet": "^3.16.0",
     "middleware-if-unless": "^1.2.0",
     "mocha": "^6.1.4",
+    "morgan": "^1.9.1",
     "nyc": "^14.0.0",
     "pm2": "^3.5.0",
     "response-time": "^2.3.2",

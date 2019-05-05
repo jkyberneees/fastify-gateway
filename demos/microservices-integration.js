@@ -1,8 +1,15 @@
+const PORT = process.env.PORT || 8080
 const iu = require('middleware-if-unless')()
+
+// gateway client
 const gclient = require('axios').create({
-  baseURL: 'http://localhost:8080'
+  baseURL: `http://localhost:${PORT}`
 })
 const boom = require('boom')
+
+// logger
+const morgan = require('morgan')
+morgan.token('cached', function (req, res) { return res.getHeader('x-cache-hit') === '1' ? '1' : '0' })
 
 // GATEWAY
 const gateway = require('fastify')({})
@@ -10,6 +17,9 @@ gateway.register(require('fastify-boom'))
 gateway.register(require('fastify-reply-from'))
 gateway.register(require('../src/plugins/cache'), {})
 gateway.register(require('../index'), {
+  middlewares: [
+    morgan(':method :url :status :res[content-length] - :response-time ms - cache :cached')
+  ],
 
   routes: [{
     prefix: '/user-api',
@@ -36,7 +46,7 @@ gateway.register(require('../index'), {
   }]
 })
 
-gateway.listen(8080).then((address) => {
+gateway.listen(PORT).then((address) => {
   console.log(`API Gateway listening on ${address}`)
 })
 
