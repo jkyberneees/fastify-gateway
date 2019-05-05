@@ -6,12 +6,10 @@ fastify.register(require('./../index'), {
     pathRegex: '',
     prefix: '/user/:id/details',
     methods: ['GET'],
-    prefixRewrite: '',
     target: 'http://localhost:3000',
-    middlewares: [],
     hooks: {
-      async onRequest (request, reply) {
-        request.req.url = `/userdetails/${request.params.id}`
+      async onRequest ({ req, params }, reply) {
+        req.url = `/userdetails/${params.id}`
       }
     }
   }]
