@@ -13,7 +13,7 @@ gateway.register(require('./../src/plugins/cache'), {
   stores: [redisCache]
 })
 gateway.register(require('fastify-reply-from'))
-gateway.register(require('..'), {
+gateway.register(require('./../index'), {
 
   routes: [{
     prefix: '/api',

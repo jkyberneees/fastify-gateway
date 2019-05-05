@@ -2,7 +2,7 @@ const toArray = require('stream-to-array')
 
 const gateway = require('fastify')({})
 gateway.register(require('fastify-reply-from'))
-gateway.register(require('..'), {
+gateway.register(require('./../index'), {
 
   routes: [{
     prefix: '/api',

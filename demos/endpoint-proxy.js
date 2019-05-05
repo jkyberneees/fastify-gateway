@@ -1,6 +1,6 @@
 const fastify = require('fastify')({})
 fastify.register(require('fastify-reply-from'))
-fastify.register(require('..'), {
+fastify.register(require('./../index'), {
 
   routes: [{
     pathRegex: '',

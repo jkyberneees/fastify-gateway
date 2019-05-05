@@ -1,6 +1,6 @@
 const fastify = require('fastify')({})
 fastify.register(require('fastify-reply-from'))
-fastify.register(require('..'), {
+fastify.register(require('./../index'), {
 
   middlewares: [
     require('cors')(),
@@ -9,22 +9,14 @@ fastify.register(require('..'), {
 
   routes: [{
     prefix: '/public',
-    prefixRewrite: '',
     target: 'http://localhost:3000',
-    middlewares: [],
-    hooks: {
-      // async onRequest (req, reply) {},
-      // onResponse (res, reply) { reply.send(res) }
-    }
+    middlewares: []
   }, {
     prefix: '/admin',
-    prefixRewrite: '',
     target: 'http://localhost:3001',
     middlewares: [
       require('express-jwt')({ secret: 'shhhhhhared-secret' })
-    ],
-    hooks: {
-    }
+    ]
   }]
 })
 

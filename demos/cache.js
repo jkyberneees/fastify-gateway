@@ -1,7 +1,7 @@
 const gateway = require('fastify')({})
 gateway.register(require('./../src/plugins/cache'), {})
 gateway.register(require('fastify-reply-from'))
-gateway.register(require('..'), {
+gateway.register(require('./../index'), {
 
   routes: [{
     prefix: '/api',
