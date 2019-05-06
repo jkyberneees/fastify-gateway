@@ -42,9 +42,9 @@ const plugin = (fastify, opts, next) => {
     return next()
   })
 
-  fastify.addHook('preHandler', async (request, reply, next) => {
+  fastify.addHook('preHandler', async (request, reply) => {
     const { req } = request
-    if (req.cacheDisabled) return next()
+    if (req.cacheDisabled) return
 
     let { url: key, cacheAppendKey = req => '' } = req
     cacheAppendKey = await cacheAppendKey(req)
@@ -53,7 +53,7 @@ const plugin = (fastify, opts, next) => {
     // ref cache key on req object
     req.cacheKey = key
     const cached = await get(multiCache, key)
-    if (!cached) return next()
+    if (!cached) return
 
     // respond from cache if there is a hit
     let { status, headers, data } = JSON.parse(cached)
