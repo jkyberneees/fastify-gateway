@@ -46,10 +46,10 @@ const plugin = (fastify, opts, next) => {
     const { req } = request
     if (req.cacheDisabled) return
 
-    let { url: key, cacheAppendKey = req => '' } = req
+    let { url, cacheAppendKey = req => '' } = req
     cacheAppendKey = await cacheAppendKey(req)
 
-    key = req.method + key + cacheAppendKey
+    const key = req.method + url + cacheAppendKey
     // ref cache key on req object
     req.cacheKey = key
     const cached = await get(multiCache, key)
