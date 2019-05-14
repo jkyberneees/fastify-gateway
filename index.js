@@ -47,7 +47,7 @@ const plugin = (fastify, opts, next) => {
     bodyLimit = (route.bodyLimit) ? {  bodyLimit: route.bodyLimit } : null;
     // registering route handler
     route.methods
-      ? fastify.route({ method: route.methods, bodyLimit: route.bodyLimit, url: route.prefix + route.pathRegex, handler: proxy(route) })
+      ? fastify.route({ method: route.methods, ...bodyLimit, url: route.prefix + route.pathRegex, handler: proxy(route) })
       : fastify.all(route.prefix + route.pathRegex, proxy(route))
   })
 
