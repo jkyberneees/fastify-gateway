@@ -66,6 +66,21 @@ module.exports = async () => {
       prefixRewrite: '/endpoint-proxy-methods-put',
       target: 'http://localhost:3000',
       methods: ['PUT']
+    },
+    {
+      pathRegex: '',
+      prefix: '/without-body-limit',
+      prefixRewrite: '/without-body-limit',
+      target: 'http://localhost:3000',
+      methods: ['POST']
+    },
+    {
+      pathRegex: '',
+      prefix: '/with-body-limit',
+      prefixRewrite: '/with-body-limit',
+      target: 'http://localhost:3000',
+      bodyLimit: 25600,
+      methods: ['POST']
     }]
   }
 }

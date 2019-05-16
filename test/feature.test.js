@@ -66,7 +66,12 @@ describe('API Gateway', () => {
     remote.post('/endpoint-proxy-methods', (req, res) => res.send({
       name: 'endpoint-proxy-methods'
     }))
-
+    remote.post('/without-body-limit', (req, res) => res.send({
+      name: 'endpoint-large-body'
+    }))
+    remote.post('/with-body-limit', (req, res) => res.send({
+      name: 'endpoint-large-body'
+    }))
     await remote.start(3000)
   })
 
@@ -273,6 +278,20 @@ describe('API Gateway', () => {
       .then((response) => {
         expect(response.body.message).to.equal('ups, pre-processing error...')
       })
+  })
+
+  it('(Default bodyLimit 1 MB, Posting Body with 26 KB) POST /without-body-limit - 200', async () => {
+      await request(gateway)
+      .post('/without-body-limit')
+      .send({array: new Uint8Array(1024*3)})
+      .expect(200)
+  })
+
+  it('(bodyLimit set to 25 KB, Posting Body with 26 KB) POST /with-body-limit - 413', async () => {
+    await request(gateway)
+      .post('/with-body-limit')
+      .send({array: new Uint8Array(1024*3)})
+      .expect(413)
   })
 
   it('close', async () => {

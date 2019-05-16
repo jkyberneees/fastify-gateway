@@ -64,7 +64,7 @@ Yeap, this is a super fast gateway implementation!
 
 Creating fine grained REST microservices in Node.js is the [easy part](https://thenewstack.io/introducing-fastify-speedy-node-js-web-framework/), difficult is to correctly integrate them as one single solution afterwards!  
 
-This gateway implementation is not only a classic HTTP proxy router, it is also a Node.js friendly `cross-cutting concerns` management solution. You don't have to: 
+This gateway implementation is not only a classic HTTP proxy router, it is also a Node.js friendly `cross-cutting concerns` management solution. You don't have to:
  - repeat in/out middleware logic anymore (cors, authentication, authorization, caching, ...)
  - blame Node.js because the asynchronous post processing of proxied requests was hard to implement...
  - ...
@@ -72,7 +72,7 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
 
 ## Configuration options explained
 
-```js 
+```js
 {
   // Optional global middlewares (https://www.fastify.io/docs/latest/Middlewares/). Default value: []
   middlewares: [],
@@ -88,6 +88,8 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
     prefix: '/public',
     // Optional "prefix rewrite" before request is forwarded. Default value: ''
     prefixRewrite: '',
+    // Optional Increase or Decrease the limit of request bodies for JSON body parser which Defaults to `1048576` (1 MiB)
+    bodyLimit: 1048576,
     // remote HTTP server URL to forward the request
     target: 'http://localhost:3000',
     // optional HTTP methods to limit the requests proxy to certain verbs only
@@ -106,7 +108,7 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
         // do some post-processing here
         // ...
         // forward response to origin client once finished
-        reply.send(res) 
+        reply.send(res)
       }
 
       // other options allowed https://github.com/fastify/fastify-reply-from#replyfromsource-opts
@@ -165,7 +167,7 @@ res.setHeader('x-cache-timeout', '1 hour')
 Example on remote service using `restana`:
 ```js
 service.get('/numbers', (req, res) => {
-  res.setHeader('x-cache-timeout', '1 hour') 
+  res.setHeader('x-cache-timeout', '1 hour')
 
   res.send([
     1, 2, 3
@@ -180,12 +182,12 @@ Remote services can also expire cache entries on demand, i.e: when the data stat
 ```js
 res.setHeader('x-cache-expire', '*/numbers')
 ```
-> Here we use the [`matcher`](`https://www.npmjs.com/package/matcher`) package for matching patterns evaluation. 
+> Here we use the [`matcher`](`https://www.npmjs.com/package/matcher`) package for matching patterns evaluation.
 
 Example on remote service using `restana`:
 ```js
 service.patch('/numbers', (req, res) => {
-  res.setHeader('x-cache-expire', '*/numbers') 
+  res.setHeader('x-cache-expire', '*/numbers')
 
   // ...
   res.send(200)
@@ -194,7 +196,7 @@ service.patch('/numbers', (req, res) => {
 
 ### Custom cache keys
 Cache keys are generated using: `req.method + req.url`, however, for indexing/segmenting requirements it makes sense to allow cache keys extensions.  
-Unfortunately, this feature can't be implemented at remote service level, because the gateway needs to know the entire lookup key when a request 
+Unfortunately, this feature can't be implemented at remote service level, because the gateway needs to know the entire lookup key when a request
 reaches the gateway.  
 
 For doing this, we simply recommend using middlewares on the service configuration:

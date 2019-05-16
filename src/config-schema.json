@@ -72,6 +72,9 @@
           "middlewares": {
             "type": "array"
           },
+          "bodyLimit": {
+            "type": "number"
+          },
           "hooks": {
             "type": "object"
           }
