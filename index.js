@@ -44,11 +44,13 @@ const plugin = (fastify, opts, next) => {
 
     // populating pathRegex if missing
     route.pathRegex = undefined === route.pathRegex ? opts.pathRegex : String(route.pathRegex)
-    bodyLimit = (route.bodyLimit) ? {  bodyLimit: route.bodyLimit } : null;
+
+    // preparing bodyLimit
+    const bodyLimit = route.bodyLimit ? Number(route.bodyLimit) : 1048576
+
     // registering route handler
-    route.methods
-      ? fastify.route({ method: route.methods, ...bodyLimit, url: route.prefix + route.pathRegex, handler: proxy(route) })
-      : fastify.all(route.prefix + route.pathRegex, proxy(route))
+    const methods = route.methods || ['DELETE', 'GET', 'HEAD', 'PATCH', 'POST', 'PUT', 'OPTIONS']
+    fastify.route({ method: methods, bodyLimit, url: route.prefix + route.pathRegex, handler: proxy(route) })
   })
 
   next()

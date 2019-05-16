@@ -280,17 +280,17 @@ describe('API Gateway', () => {
       })
   })
 
-  it('(Default bodyLimit 1 MB, Posting Body with 26 KB) POST /without-body-limit - 200', async () => {
-      await request(gateway)
+  it('(default bodyLimit 1 MB, posting body with 26 KB) POST /without-body-limit - 200', async () => {
+    await request(gateway)
       .post('/without-body-limit')
-      .send({array: new Uint8Array(1024*3)})
+      .send({ array: new Uint8Array(1024 * 3) })
       .expect(200)
   })
 
-  it('(bodyLimit set to 25 KB, Posting Body with 26 KB) POST /with-body-limit - 413', async () => {
+  it('(bodyLimit set to 25 KB, posting body with 26 KB) POST /with-body-limit - 413', async () => {
     await request(gateway)
       .post('/with-body-limit')
-      .send({array: new Uint8Array(1024*3)})
+      .send({ array: new Uint8Array(1024 * 3) })
       .expect(413)
   })
 

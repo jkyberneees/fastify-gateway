@@ -88,7 +88,7 @@ This gateway implementation is not only a classic HTTP proxy router, it is also 
     prefix: '/public',
     // Optional "prefix rewrite" before request is forwarded. Default value: ''
     prefixRewrite: '',
-    // Optional Increase or Decrease the limit of request bodies for JSON body parser which Defaults to `1048576` (1 MiB)
+    // Optional body limit setting for fastify JSON body parser. Default value: 1048576 (1 MiB)
     bodyLimit: 1048576,
     // remote HTTP server URL to forward the request
     target: 'http://localhost:3000',
