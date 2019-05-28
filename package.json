@@ -31,7 +31,8 @@
     "cache-manager": "^2.9.0",
     "fastify-reply-from": "^0.6.0",
     "matcher": "^2.0.0",
-    "ms": "^2.1.1"
+    "ms": "^2.1.1",
+    "on-http-end": "^1.0.0"
   },
   "files": [
     "src"
