@@ -1,7 +1,7 @@
 const fp = require('fastify-plugin')
 const CacheManager = require('cache-manager')
 const ms = require('ms')
-const onFinished = require('./on-finished')
+const onEnd = require('on-http-end')
 const getKeys = require('./get-keys')
 
 const X_CACHE_EXPIRE = 'x-cache-expire'
@@ -20,7 +20,7 @@ const plugin = (fastify, opts, next) => {
     const { res } = reply
     const { req } = request
 
-    onFinished(res, (payload) => {
+    onEnd(res, (payload) => {
       // avoid double caching
       if (req.cacheHit) return
 
