@@ -1,6 +1,6 @@
 {
   "name": "k-fastify-gateway",
-  "version": "2.7.2",
+  "version": "2.7.3",
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
   "dependencies": {
     "cache-manager": "^2.9.1",
-    "fastify-reply-from": "^0.6.1",
+    "fastify-reply-from": "^0.6.2",
     "matcher": "^2.0.0",
     "ms": "^2.1.1",
     "on-http-end": "^1.0.0"
