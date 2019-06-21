@@ -1,6 +1,6 @@
 {
   "name": "k-fastify-gateway",
-  "version": "2.7.3",
+  "version": "2.7.4",
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
@@ -31,8 +31,8 @@
     "cache-manager": "^2.9.1",
     "fastify-reply-from": "^0.6.2",
     "matcher": "^2.0.0",
-    "ms": "^2.1.1",
-    "on-http-end": "^1.0.0"
+    "ms": "^2.1.2",
+    "on-http-end": "^1.0.1"
   },
   "files": [
     "src"
@@ -45,7 +45,7 @@
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express-jwt": "^5.3.1",
-    "fastify": "^2.4.1",
+    "fastify": "^2.5.0",
     "fastify-boom": "^0.1.0",
     "helmet": "^3.18.0",
     "middleware-if-unless": "^1.2.0",
@@ -54,7 +54,7 @@
     "nyc": "^14.1.1",
     "pm2": "^3.5.1",
     "response-time": "^2.3.2",
-    "restana": "^3.1.0",
+    "restana": "^3.2.1",
     "standard": "^12.0.0",
     "stream-to-array": "^2.3.0",
     "supertest": "^3.4.2"
