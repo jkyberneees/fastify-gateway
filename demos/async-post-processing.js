@@ -30,5 +30,5 @@ service.get('/info', (req, res) => res.send({
   name: 'fastify-gateway'
 }))
 service.start(3000).then(() => {
-  console.log(`Remote service listening on port 3000`)
+  console.log('Remote service listening on port 3000')
 })
