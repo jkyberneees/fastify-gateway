@@ -16,7 +16,7 @@ fastify.register(require('./../index'), {
 })
 
 fastify.listen(8080).then((address) => {
-  console.log(`Gateway endpoint: http://localhost:8080/user/1/details is mapped as -> http://localhost:3000/userdetails/:id`)
+  console.log('Gateway endpoint: http://localhost:8080/user/1/details is mapped as -> http://localhost:3000/userdetails/:id')
 })
 
 const remote = require('restana')({})

@@ -29,5 +29,5 @@ service.patch('/numbers', (req, res) => {
 })
 
 service.start(3000).then(() => {
-  console.log(`Remote service listening on port 3000`)
+  console.log('Remote service listening on port 3000')
 })
