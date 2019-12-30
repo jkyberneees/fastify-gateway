@@ -1,6 +1,6 @@
 {
   "name": "k-fastify-gateway",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
@@ -28,9 +28,9 @@
   },
   "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
   "dependencies": {
-    "cache-manager": "^2.10.0",
+    "cache-manager": "^2.10.1",
     "fastify-reply-from": "^1.1.0",
-    "matcher": "^2.0.0",
+    "matcher": "^2.1.0",
     "ms": "^2.1.2",
     "on-http-end": "^1.0.1"
   },
@@ -38,24 +38,24 @@
     "src"
   ],
   "devDependencies": {
-    "0http": "^1.2.3",
+    "0http": "^1.2.4",
     "axios": "^0.19.0",
     "boom": "^7.3.0",
     "cache-manager-ioredis": "^1.0.1",
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express-jwt": "^5.3.1",
-    "fastify": "^2.7.1",
+    "fastify": "^2.11.0",
     "fastify-boom": "^0.1.0",
-    "helmet": "^3.20.0",
-    "middleware-if-unless": "^1.2.1",
-    "mocha": "^6.2.0",
+    "helmet": "^3.21.2",
+    "middleware-if-unless": "^1.2.3",
+    "mocha": "^6.2.2",
     "morgan": "^1.9.1",
-    "nyc": "^14.1.1",
-    "pm2": "^3.5.1",
+    "nyc": "^15.0.0",
+    "pm2": "^4.2.1",
     "response-time": "^2.3.2",
-    "restana": "^3.3.1",
-    "standard": "^14.0.2",
+    "restana": "^3.4.2",
+    "standard": "^14.3.1",
     "stream-to-array": "^2.3.0",
     "supertest": "^4.0.2"
   }
