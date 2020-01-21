@@ -29,7 +29,7 @@
   "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
   "dependencies": {
     "cache-manager": "^2.10.1",
-    "fastify-reply-from": "^1.1.0",
+    "fastify-reply-from": "^2.0.0",
     "matcher": "^2.1.0",
     "ms": "^2.1.2",
     "on-http-end": "^1.0.1"
