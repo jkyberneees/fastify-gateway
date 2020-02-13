@@ -41,7 +41,7 @@
     "0http": "^1.2.4",
     "axios": "^0.19.0",
     "boom": "^7.3.0",
-    "cache-manager-ioredis": "^1.0.1",
+    "cache-manager-ioredis": "^2.0.0",
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express-jwt": "^5.3.1",
