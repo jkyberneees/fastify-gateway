@@ -1,6 +1,6 @@
 {
   "name": "k-fastify-gateway",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "description": "A Node.js API Gateway that just works!",
   "main": "index.js",
   "scripts": {
