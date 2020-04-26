@@ -30,7 +30,7 @@
   "dependencies": {
     "cache-manager": "^3.2.1",
     "fastify-reply-from": "^2.0.1",
-    "matcher": "^2.1.0",
+    "matcher": "^3.0.0",
     "ms": "^2.1.2",
     "on-http-end": "^1.0.1"
   },
