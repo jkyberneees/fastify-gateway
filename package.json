@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/jkyberneees/fastify-gateway#readme",
   "dependencies": {
-    "cache-manager": "^3.2.1",
+    "cache-manager": "^3.3.0",
     "fastify-reply-from": "^2.1.0",
     "matcher": "^2.1.0",
     "ms": "^2.1.2",
