@@ -45,7 +45,7 @@
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express-jwt": "^5.3.3",
-    "fastify": "^2.13.1",
+    "fastify": "^2.14.1",
     "fastify-boom": "^0.1.0",
     "helmet": "^3.22.0",
     "middleware-if-unless": "^1.2.4",
