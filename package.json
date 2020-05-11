@@ -55,7 +55,7 @@
     "pm2": "^4.4.0",
     "response-time": "^2.3.2",
     "restana": "^4.3.4",
-    "standard": "^14.3.3",
+    "standard": "^14.3.4",
     "stream-to-array": "^2.3.0",
     "supertest": "^4.0.2"
   }
