@@ -38,7 +38,7 @@
     "src"
   ],
   "devDependencies": {
-    "0http": "^2.3.0",
+    "0http": "^2.5.2",
     "axios": "^0.19.2",
     "boom": "^7.3.0",
     "cache-manager-ioredis": "^1.0.1",
