@@ -54,7 +54,7 @@
     "nyc": "^15.0.1",
     "pm2": "^4.4.0",
     "response-time": "^2.3.2",
-    "restana": "^4.3.4",
+    "restana": "^4.6.0",
     "standard": "^14.3.3",
     "stream-to-array": "^2.3.0",
     "supertest": "^4.0.2"
