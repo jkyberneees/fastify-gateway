@@ -51,7 +51,7 @@
     "middleware-if-unless": "^1.2.4",
     "mocha": "^7.1.2",
     "morgan": "^1.10.0",
-    "nyc": "^15.0.1",
+    "nyc": "^15.1.0",
     "pm2": "^4.4.0",
     "response-time": "^2.3.2",
     "restana": "^4.3.4",
