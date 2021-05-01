@@ -294,7 +294,8 @@ describe('API Gateway', () => {
       .expect(413)
   })
 
-  it('close', async () => {
+  it('close', async function () {
+    this.timeout(5000)
     await remote.close()
     await fastify.close()
   })
