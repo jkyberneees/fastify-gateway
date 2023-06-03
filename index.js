@@ -3,10 +3,11 @@ const fp = require('fastify-plugin')
 
 const proxy = route => async (request, reply) => {
   try {
-    request.url = request.url.replace(route.prefix, route.prefixRewrite)
+    const url = request.url.replace(route.prefix, route.prefixRewrite)
+    request.url = url
     const shouldAbortProxy = await route.hooks.onRequest(request, reply)
     if (!shouldAbortProxy) {
-      return reply.from(route.target + request.url, Object.assign({}, route.hooks))
+      return reply.from(route.target + url, Object.assign({}, route.hooks))
     }
   } catch (err) {
     return reply.send(err)
